@@ -20,6 +20,8 @@ import {MatTableModule} from '@angular/material/table';
 import { InsumosComponent } from './insumos/insumos.component';
 import { RegistrarseComponent } from './registrarse/registrarse.component';
 import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EditarProductoComponent } from './editar-producto/editar-producto.component'
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.componen
     ProductosComponent,
     InsumosComponent,
     RegistrarseComponent,
-    IniciarSesionComponent
+    IniciarSesionComponent,
+    EditarProductoComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +46,7 @@ import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.componen
     MatCardModule,
     MatTableModule,
     HttpClientModule,
+    MatDialogModule
   ],
   providers: [
     provideClientHydration(),

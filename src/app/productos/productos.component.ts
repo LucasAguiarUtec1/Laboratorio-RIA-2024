@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ProductosServicesService } from '../Services/productos-services.service';
 import { Producto } from '../models/producto';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { EditarProductoComponent } from '../editar-producto/editar-producto.component';
 
 @Component({
   selector: 'app-productos',
@@ -11,7 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ProductosComponent {
 
   constructor(private productosService: ProductosServicesService, 
-    private snackbar: MatSnackBar){}
+    private snackbar: MatSnackBar,
+    public modal: MatDialog){}
 
   productos: Producto[] = [];
 
@@ -27,6 +30,13 @@ export class ProductosComponent {
             {duration: 3000}
           );
       }
+    });
+  }
+
+  openEditModal(producto: any, prodId: number): void {
+    const modal = this.modal.open(EditarProductoComponent, {
+      width: '300px',
+      data: producto
     });
   }
 

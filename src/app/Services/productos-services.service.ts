@@ -35,6 +35,14 @@ export class ProductosServicesService {
     return this.http.delete<Producto[]>(this.apiUrl + '/' + id, {headers});
   }
 
+  editProducto(producto: Producto): Observable<Producto> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.put<Producto>(this.apiUrl + '/' + producto.id, producto, {headers});
+  }
+
   getInsumos(): Observable<Insumo[]> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
