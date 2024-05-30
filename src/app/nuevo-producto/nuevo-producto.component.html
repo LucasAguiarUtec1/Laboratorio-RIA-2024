@@ -1,0 +1,33 @@
+<div class="container">
+  <mat-card class="form-card">
+    <form [formGroup]="productosForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" required>
+        <mat-error *ngIf="productosForm.get('nombre')?.hasError('required')">El nombre es requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Descripción</mat-label>
+        <input matInput formControlName="descripcion">
+      </mat-form-field>
+
+      <div class="file-input-wrapper">
+        <label for="file-input">Imagen</label>
+        <input id="file-input" type="file" (change)="onFileSelected($event)">
+      </div>
+
+      <div class="preview-wrapper" *ngIf="imageString">
+        <img [src]="imageString" alt="Imagen cargada" />
+      </div>
+
+      <mat-form-field appearance="fill" class="margin-top">
+        <mat-label>Precio</mat-label>
+        <input matInput type="number" formControlName="precio" required>
+        <mat-error *ngIf="productosForm.get('precio')?.hasError('required')">El precio es requerido</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Enviar</button>
+    </form>
+  </mat-card>
+</div>
