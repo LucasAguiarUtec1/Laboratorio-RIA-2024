@@ -192,16 +192,19 @@
     <span>Sistema de gestion de pedidos</span>
   </div>
   <span class="spacer"></span> <!-- Elemento de espaciado -->
+  <span *ngIf="authService.isLoggedIn && !isSmallScreen">{{authService.nombre}}</span>
   <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with menu icon"
           [@menuIconAnimation]="menuState" (click)="toggleMenu()">
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
+      <p mat-menu-item *ngIf="authService.isLoggedIn && isSmallScreen" disabled>{{authService.nombre}}</p>
       <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="nuevoProducto()">Nuevo Producto</button>
       <button mat-menu-item *ngIf="authService.isLoggedIn" (click)="productos()">Ver Productos</button>
       <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="insumos()">Insumos</button>
       <button mat-menu-item *ngIf="!authService.isLoggedIn" (click)="iniciarSesion()">Iniciar sesión</button>
       <button mat-menu-item *ngIf="!authService.isLoggedIn" (click)="registrarse()">Registrarse</button>
+      <button mat-menu-item *ngIf="authService.isLoggedIn" (click)="cerrarSesion()">Cerrar sesion</button>
   </mat-menu>
 </mat-toolbar>
 

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LabBackendService } from '../services/lab-backend.service';
 import { Usuario } from '../models/usuario';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrarse',
@@ -18,7 +19,8 @@ export class RegistrarseComponent implements OnInit {
   });
 
   constructor(private labBackendService: LabBackendService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -33,7 +35,7 @@ export class RegistrarseComponent implements OnInit {
   onSubmit() {
     if (this.registerForm.valid) {
       const nuevoUsuario: Usuario = this.registerForm.value;
-      this.labBackendService.registerUser(nuevoUsuario.email, nuevoUsuario.password, nuevoUsuario.role, nuevoUsuario.telefono).subscribe({  
+      this.labBackendService.registerUser(nuevoUsuario.nombre, nuevoUsuario.password, nuevoUsuario.role, nuevoUsuario.telefono).subscribe({  
         next: (data) => {
           console.log('Usuario registrado exitosamente', data);
           this.snackBar.open('Usuario registrado exitosamente', '', {
@@ -45,6 +47,7 @@ export class RegistrarseComponent implements OnInit {
           Object.keys(this.registerForm.controls).forEach(key => {
             this.registerForm.get(key)?.setErrors(null);
           });
+          this.router.navigate(['/iniciarSesion']);
         },
         error: (error) => {
           console.error('Error al registrar el usuario', error);

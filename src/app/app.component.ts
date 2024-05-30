@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth-service.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 
 @Component({
@@ -20,20 +21,34 @@ import { AuthService } from './services/auth-service.service';
     ])
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Laboratorio';
   isLoggedIn = false;
+  isSmallScreen = false;
 
   public menuState: String = "closed";
 
+  ngOnInit() {
+    this.breakpointObserver.observe([
+      '(max-width: 599px)'
+    ]).subscribe(result => {
+      this.isSmallScreen = result.matches;
+    });
+  }
+
   constructor(private router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    public breakpointObserver: BreakpointObserver
   ){} 
 
   toggleMenu() {
     this.menuState = this.menuState === 'closed' ? 'open' : 'closed';
   }
 
+  cerrarSesion() {
+    this.authService.logout();
+    this.router.navigate(['/iniciarSesion']);
+  }
 
   nuevoProducto() {
     this.router.navigate(['/nuevoProducto']);

@@ -32,7 +32,7 @@ export class IniciarSesionComponent implements OnInit {
         next: (data) => {
           console.log('Se inicio sesion exitosamente', data);
           this.authService.setToken(data.token!);
-          this.authService.setLoggedIn(true, data.role);
+          this.authService.setLoggedIn(true, data.role, data.nombre);
         },
         error: (error) => {
           console.error('Error al iniciar sesion', error);

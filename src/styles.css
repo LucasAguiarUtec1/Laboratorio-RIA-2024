@@ -2,7 +2,7 @@
 
 /* Define custom properties (CSS variables) for your theme colors */
 :root {
-  --primary-color: #673ab7; /* Deep Purple */
+  --primary-color: #ebebeb; /* Deep Purple */
   --accent-color: #ff4081;  /* Amber */
   --warn-color: #f44336;    /* Red */
 }
