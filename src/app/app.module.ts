@@ -22,6 +22,8 @@ import { RegistrarseComponent } from './registrarse/registrarse.component';
 import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditarProductoComponent } from './editar-producto/editar-producto.component'
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { EditarProductoComponent } from './editar-producto/editar-producto.compo
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

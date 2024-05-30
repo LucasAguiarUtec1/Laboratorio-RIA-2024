@@ -12,36 +12,30 @@ export class ProductosServicesService {
   private apiUrl = 'http://localhost:3000/productos';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
+  private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzE3MDkzNDI2LCJleHAiOjE3MTcwOTcwMjZ9.2ukGys1roNxh9Uyba22Ft32eRZHffoXD2DSZuQDEIOE';
+
+  // getProductos(): Observable<Producto[]> {
+  //   const token = this.authService.getToken();
+  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  //   return this.http.get<Producto[]>(this.apiUrl, { headers });
+  // }
 
   getProductos(): Observable<Producto[]> {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<Producto[]>(this.apiUrl, { headers });
+    return this.http.get<Producto[]>(this.apiUrl);
   }
 
   createProducto(producto: Producto): Observable<Producto> {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    }); 
-    return this.http.post<Producto>(this.apiUrl, producto, { headers });
+    return this.http.post<Producto>(this.apiUrl, producto);
   }
 
   deleteProducto(id: number): Observable<Producto[]> {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    }); 
-    return this.http.delete<Producto[]>(this.apiUrl + '/' + id, {headers});
+    return this.http.delete<Producto[]>(`${this.apiUrl}/${id}`);
   }
 
   editProducto(producto: Producto): Observable<Producto> {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.put<Producto>(this.apiUrl + '/' + producto.id, producto, {headers});
+    return this.http.put<Producto>(`${this.apiUrl}/${producto.id}`, producto);
   }
+
 
   getInsumos(): Observable<Insumo[]> {
     const token = this.authService.getToken();

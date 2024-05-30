@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Producto } from '../models/producto';
-import { ProductosServicesService } from '../Services/productos-services.service';
+import { ProductosServicesService } from '../services/productos-services.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
