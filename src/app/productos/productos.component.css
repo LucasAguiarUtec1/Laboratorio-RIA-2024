@@ -1,24 +1,36 @@
 .container {
-    padding: 16px;
-  }
-  
-  table {
-    width: 100%;
-  }
-  
-  .mat-header-cell, .mat-cell {
-    text-align: center;
-  }
-  
-  .product-image {
-    width: 50px;
-    height: auto;
-  }
+  padding: 16px;
+}
 
-  .action-cell {
-    text-align: center;
-  }
-  
-  .mat-icon-button {
-    margin: 0 4px;
-  }
+table {
+  width: 100%;
+}
+
+.product-image {
+  width: 50px;
+  height: auto;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-cell {
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  height: 100%; /* Asegurar que la altura ocupe toda la celda */
+  padding: 0;
+}
+
+.mat-header-cell, .mat-cell {
+  text-align: center; /* Centrar el contenido horizontalmente */
+  vertical-align: middle; /* Asegurar que el contenido esté verticalmente centrado */
+}
+
+.mat-icon-button {
+  margin: 0 4px;
+}

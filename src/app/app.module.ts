@@ -19,6 +19,8 @@ import { ProductosComponent } from './productos/productos.component'
 import {MatTableModule} from '@angular/material/table';
 import { InsumosComponent } from './insumos/insumos.component';
 import { RegistrarseComponent } from './registrarse/registrarse.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EditarProductoComponent } from './editar-producto/editar-producto.component'
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { RegistrarseComponent } from './registrarse/registrarse.component';
     NuevoProductoComponent,
     ProductosComponent,
     InsumosComponent,
-    RegistrarseComponent
+    RegistrarseComponent,
+    EditarProductoComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,7 @@ import { RegistrarseComponent } from './registrarse/registrarse.component';
     MatCardModule,
     MatTableModule,
     HttpClientModule,
+    MatDialogModule
   ],
   providers: [
     provideClientHydration(),

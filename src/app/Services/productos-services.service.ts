@@ -12,7 +12,7 @@ export class ProductosServicesService {
   constructor(private http: HttpClient) { }
 
   private apiUrl = 'http://localhost:3000/productos';
-  private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzE2OTIzNzc4LCJleHAiOjE3MTY5MjczNzh9.JWibEkaNpAi7nyzlvv2nL8CHj3l3Qc7IKZC84ytYYN8';
+  private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzE3MDkzNDI2LCJleHAiOjE3MTcwOTcwMjZ9.2ukGys1roNxh9Uyba22Ft32eRZHffoXD2DSZuQDEIOE';
 
   getProductos(): Observable<Producto[]> {
     const headers = new HttpHeaders({
@@ -33,6 +33,13 @@ export class ProductosServicesService {
       'Authorization': `${this.token}`
     });
     return this.http.delete<Producto[]>(this.apiUrl + '/' + id, {headers});
+  }
+
+  editProducto(producto: Producto): Observable<Producto> {
+    const headers = new HttpHeaders({
+      'Authorization': `${this.token}`
+    });
+    return this.http.put<Producto>(this.apiUrl + '/' + producto.id, producto, {headers});
   }
 
   getInsumos(): Observable<Insumo[]> {
