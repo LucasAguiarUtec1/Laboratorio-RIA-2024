@@ -1,0 +1,28 @@
+
+<div class="container">
+    <mat-card class="form-card">
+        <h1>Iniciar sesion</h1>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div style="margin-bottom: 16px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" aria-label="Email">
+                        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+                            El email es requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+    
+                <div style="margin-bottom: 16px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput formControlName="password" aria-label="Contraseña">
+                        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                            La contraseña es requerida
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <button mat-raised-button color="primary" type="submit">Iniciar sesion</button>
+            </form>
+    </mat-card>
+</div>

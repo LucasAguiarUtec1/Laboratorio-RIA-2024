@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
+import { AuthService } from './services/auth-service.service';
+
 
 @Component({
   selector: 'app-root',
@@ -20,10 +22,13 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'Laboratorio';
+  isLoggedIn = false;
 
   public menuState: String = "closed";
 
-  constructor(private router: Router){} 
+  constructor(private router: Router,
+    public authService: AuthService
+  ){} 
 
   toggleMenu() {
     this.menuState = this.menuState === 'closed' ? 'open' : 'closed';
@@ -40,5 +45,13 @@ export class AppComponent {
 
   insumos() {
     this.router.navigate(['/insumos']);
+  }
+
+  registrarse() {
+    this.router.navigate(['/registrarse']);
+  }
+
+  iniciarSesion() { 
+    this.router.navigate(['/iniciarSesion']);
   }
 }

@@ -3,41 +3,42 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Producto } from '../models/producto';
 import { Insumo } from '../models/insumo';
+import { AuthService } from '../services/auth-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductosServicesService {
-
-  constructor(private http: HttpClient) { }
-
   private apiUrl = 'http://localhost:3000/productos';
-  private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzE2OTIzNzc4LCJleHAiOjE3MTY5MjczNzh9.JWibEkaNpAi7nyzlvv2nL8CHj3l3Qc7IKZC84ytYYN8';
+
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getProductos(): Observable<Producto[]> {
-    const headers = new HttpHeaders({
-      'Authorization': `${this.token}`
-    }); 
-    return this.http.get<Producto[]>(this.apiUrl, {headers});
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<Producto[]>(this.apiUrl, { headers });
   }
 
   createProducto(producto: Producto): Observable<Producto> {
+    const token = this.authService.getToken();
     const headers = new HttpHeaders({
-      'Authorization': `${this.token}`
+      'Authorization': `Bearer ${token}`
     }); 
-    return this.http.post<Producto>(this.apiUrl, producto,{headers});
+    return this.http.post<Producto>(this.apiUrl, producto, { headers });
   }
 
   deleteProducto(id: number): Observable<Producto[]> {
+    const token = this.authService.getToken();
     const headers = new HttpHeaders({
-      'Authorization': `${this.token}`
-    });
+      'Authorization': `Bearer ${token}`
+    }); 
     return this.http.delete<Producto[]>(this.apiUrl + '/' + id, {headers});
   }
 
   getInsumos(): Observable<Insumo[]> {
+    const token = this.authService.getToken();
     const headers = new HttpHeaders({
-      'Authorization': `${this.token}`
+      'Authorization': `Bearer ${token}`
     });
 
     return this.http.get<Insumo[]>(this.apiUrl + 'insumos', {headers});

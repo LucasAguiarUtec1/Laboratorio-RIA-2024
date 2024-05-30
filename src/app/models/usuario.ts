@@ -1,6 +1,7 @@
 export class Usuario {
     email: string = '';
-    contraseña: string = '';
+    password: string = '';
     role: string = '';
     telefono: string = '';
+    token?: string = '';
   }
