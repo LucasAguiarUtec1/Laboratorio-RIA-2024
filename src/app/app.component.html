@@ -66,7 +66,6 @@
     min-height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 1rem;
     box-sizing: inherit;
     position: relative;
@@ -77,11 +76,8 @@
   }
 
   .content {
-    display: flex;
-    justify-content: space-around;
     width: 100%;
-    max-width: 700px;
-    margin-bottom: 3rem;
+    max-width: 90%;
   }
 
   .content h1 {
@@ -174,10 +170,27 @@
       background: var(--red-to-pink-to-purple-horizontal-gradient);
       margin-block: 1.5rem;
     }
+
+    .nav {
+      flex-direction: column;
+      align-items: start;
+      height: max-content;
+    }
+
+    .titulo {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .spacer {
+    flex: 1 1 auto;
   }
 </style>
 
 <mat-toolbar color="accent">
+  <div class="titulo">
+    <span>Sistema de gestion de pedidos</span>
+  </div>
   <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with menu icon"
           [@menuIconAnimation]="menuState" (click)="toggleMenu()">
     <mat-icon>menu</mat-icon>
@@ -186,7 +199,18 @@
     <button mat-menu-item (click)="nuevoProducto()">Nuevo Producto</button>
     <button mat-menu-item (click)="productos()">Ver Productos</button>
     <button mat-menu-item (click)="insumos()">Insumos</button>
+    <button mat-button>Iniciar sesión</button>
+    <button mat-button [routerLink]="['/registrarse']">Registrarse</button>
   </mat-menu>
 </mat-toolbar>
 
 <router-outlet />
+
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+

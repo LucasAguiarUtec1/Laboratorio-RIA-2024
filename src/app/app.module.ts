@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ProductosComponent } from './productos/productos.component'
 import {MatTableModule} from '@angular/material/table';
 import { InsumosComponent } from './insumos/insumos.component';
+import { RegistrarseComponent } from './registrarse/registrarse.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { InsumosComponent } from './insumos/insumos.component';
     NuevoProductoComponent,
     ProductosComponent,
     InsumosComponent,
+    RegistrarseComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,7 @@ import { InsumosComponent } from './insumos/insumos.component';
     MatInputModule,
     MatCardModule,
     MatTableModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     provideClientHydration(),
