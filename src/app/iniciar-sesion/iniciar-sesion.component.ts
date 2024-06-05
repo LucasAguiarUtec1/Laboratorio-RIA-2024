@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LabBackendService } from '../services/lab-backend.service';
-import { AuthService } from '../services/auth-service.service';
+import { LabBackendService } from '../Services/lab-backend.service';
+import { AuthService } from '../Services/auth-service.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ForgotPasswordDialogComponent } from '../forgot-password-dialog/forgot-password-dialog.component';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -10,18 +12,25 @@ import { AuthService } from '../services/auth-service.service';
 })
 export class IniciarSesionComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({
-    email: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
   });
 
   constructor(private labBackendService: LabBackendService,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private dialog: MatDialog) { }
+
+  openForgotPasswordDialog() {
+    this.dialog.open(ForgotPasswordDialogComponent, {
+      width: '500px'
+    });
+  }
 
   ngOnInit() {
-    this.loginForm = new FormGroup({
-      email: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
-    });
+      this.loginForm = new FormGroup({
+          email: new FormControl('', [Validators.required, Validators.email]),
+          password: new FormControl('', Validators.required),
+      });
   }
 
   onSubmit() {

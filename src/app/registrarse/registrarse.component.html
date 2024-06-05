@@ -6,9 +6,12 @@
             <div style="margin-bottom: 16px;">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Email</mat-label>
-                    <input matInput formControlName="email" aria-label="Email">
-                    <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+                    <input matInput formControlName="nombre" aria-label="Email">
+                    <mat-error *ngIf="registerForm.get('nombre')?.hasError('required')">
                         El email es requerido
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('nombre')?.hasError('nombre')">
+                        Por favor ingresa un email válido
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -20,15 +23,22 @@
                     <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
                         La contraseña es requerida
                     </mat-error>
+                    <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+                        La contraseña debe tener al menos 8 caracteres
+                    </mat-error>
                 </mat-form-field>
             </div>
 
-            <div style="margin-bottom: 16px;">
+            <div *ngIf="authService.role === 'ADMIN'" style="margin-bottom: 16px;">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Rol</mat-label>
-                    <input matInput formControlName="role" aria-label="Rol">
+                    <mat-select formControlName="role" aria-label="Role">
+                    <mat-option value="ADMIN">ADMIN</mat-option>
+                    <mat-option value="PANADERO">PANADERO</mat-option>
+                    <mat-option value="USER">USER</mat-option>
+                    </mat-select>
                     <mat-error *ngIf="registerForm.get('role')?.hasError('required')">
-                        El rol es requerido
+                    El rol es requerido
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -39,6 +49,15 @@
                     <input matInput formControlName="telefono" aria-label="Teléfono">
                     <mat-error *ngIf="registerForm.get('telefono')?.hasError('required')">
                         El telefono es requerido
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('telefono')?.hasError('pattern')">
+                        Por favor ingresa solo números
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('telefono')?.hasError('minlength')">
+                        El teléfono debe tener 9 caracteres
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.get('telefono')?.hasError('maxLength')">
+                        El teléfono debe tener 9 caracteres
                     </mat-error>
                 </mat-form-field>
             </div>

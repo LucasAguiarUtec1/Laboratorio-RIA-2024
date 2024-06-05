@@ -24,6 +24,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { EditarProductoComponent } from './editar-producto/editar-producto.component'
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { MatSelectModule } from '@angular/material/select';
+import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-password-dialog.component'; 
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     InsumosComponent,
     RegistrarseComponent,
     IniciarSesionComponent,
-    EditarProductoComponent
+    EditarProductoComponent,
+    ForgotPasswordDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,8 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     MatCardModule,
     MatTableModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule
   ],
   providers: [
     provideClientHydration(),

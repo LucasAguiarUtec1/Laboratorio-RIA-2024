@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
-import { AuthService } from './services/auth-service.service';
+import { AuthService } from './Services/auth-service.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 
@@ -68,5 +68,9 @@ export class AppComponent implements OnInit {
 
   iniciarSesion() { 
     this.router.navigate(['/iniciarSesion']);
+  }
+
+  registrarUsuario() { 
+    this.router.navigate(['/registrarse']);
   }
 }

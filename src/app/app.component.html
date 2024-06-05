@@ -199,6 +199,7 @@
   </button>
   <mat-menu #menu="matMenu">
       <p mat-menu-item *ngIf="authService.isLoggedIn && isSmallScreen" disabled>{{authService.nombre}}</p>
+      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN'" (click)="registrarUsuario()">Registrar usuario</button>
       <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="nuevoProducto()">Nuevo Producto</button>
       <button mat-menu-item *ngIf="authService.isLoggedIn" (click)="productos()">Ver Productos</button>
       <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="insumos()">Insumos</button>
