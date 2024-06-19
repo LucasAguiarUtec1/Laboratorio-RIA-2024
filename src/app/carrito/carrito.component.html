@@ -15,18 +15,6 @@
         box-sizing: border-box; /* Incluye el padding y borde en el ancho total */
     } 
 
-    .datos { 
-        display: flex; 
-        flex-direction: column; 
-        align-items: flex-start; 
-        justify-content: flex-start; 
-        margin: 10px; 
-        padding: 10px; 
-        border: 2px solid #ccc; 
-        border-radius: 5px; 
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    }
-
     .titulo { 
         font-size: 1.5em; 
         text-align: center;
@@ -62,9 +50,9 @@
     }
 
     .total {
-        margin: 20px 0;
+        margin: 10px 0;
         font-size: 1.5em;
-        font-weight: 700;
+        font-weight: 500;
         text-align: center;
     }
 
@@ -73,30 +61,85 @@
         white-space: nowrap; 
         width: auto;
     }
+
+    .producto-card {
+        position: relative;
+        display: flex; 
+        flex-direction: column; 
+        align-items: flex-start; 
+        justify-content: flex-start; 
+        margin: 10px; 
+        padding: 10px; 
+        border: 2px solid #ccc; 
+        border-radius: 5px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 1.1rem;
+        background: transparent;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    .no-productos {
+        margin-top: 10px;
+        font-size: 1rem;
+        font-weight:500; 
+        text-align: center;
+    }
+
+    .fecha-entrega {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 250px; 
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid #ccc; 
+        border-radius: 5px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    }  
+
+    .fecha-entrega mat-form-field {
+        margin-bottom: -1.4em; /* Ajusta según sea necesario */
+    }
 </style>
 
     
 <div class="container">
     <mat-card class="form-card">
         <mat-card-title class="titulo">MI PEDIDO</mat-card-title>
-        <form [formGroup]="carritoForm">
-        <div formArrayName="productos">
-            <div *ngFor="let producto of productos.controls; let i = index" [formGroupName]="i">
-                <div class="datos">
+        <form [formGroup]="carritoForm" (ngSubmit)="confirmarPedido()">
+            <div formArrayName="productos">
+                <mat-card *ngFor="let producto of productos.controls; let i = index" [formGroupName]="i" class="producto-card">
+                    <button mat-icon-button type="button" class="close-btn" (click)="eliminarProducto(i)"><mat-icon>close</mat-icon></button>
                     <p class="nombre">Nombre: {{ producto.get('nombre')?.value }}</p>
                     <p class="precio">Precio: {{ producto.get('precio')?.value | currency }}</p>
                     <div class="cantidad">
                     <p class="cant">Cantidad:</p>
-                    <input matInput formControlName="cantidad" aria-label="Cantidad" type="number" class="cantidadInp" min="1">
+                    <input matInput formControlName="cantidad" aria-label="Cantidad" type="number" class="cantidadInp" min="1" oninput="this.value = Math.abs(this.value)">
                     </div>
+                </mat-card>
+                <div *ngIf="productos.controls.length === 0" class="no-productos">
+                    No tienes productos en el carrito.
                 </div>
             </div>
-        </div>
+            <div *ngIf="productos.controls.length > 0" class="fecha-entrega">
+                <mat-form-field appearance="fill">
+                    <mat-label>Fecha de entrega</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="fechaEntrega" class="fechaEntrega" required readonly [min]="minDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div *ngIf="productos.controls.length > 0" class="total">
+                <p>Precio Total: {{ totalPrecio | currency }}</p>
+                <button mat-raised-button color="primary" type="submit" class="btnConfirmar">Confirmar pedido</button>
+            </div>
         </form>
-        <div class="total">
-        <p>Precio Total: {{ totalPrecio | currency }}</p>
-        <button mat-raised-button color="primary" type="submit" class="btnConfirmar">Confirmar pedido</button>
-        </div>
     </mat-card>
 </div>
   

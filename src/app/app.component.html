@@ -178,35 +178,53 @@
     }
 
     .titulo {
-      margin-bottom: 1rem;
+      font-size: 1rem;
     }
+  }
+
+  .titulo {
+    font-size: 1.3rem;
+    cursor: pointer; /* Cambia el cursor a puntero */
+    user-select: none; /* Evita la selección del texto */
+    display: inline-block; /* Para asegurarse de que el área sea clicable */
   }
 
   .spacer {
     flex: 1 1 auto;
   }
+
+  .notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: red;
+    color: white;
+    border-radius: 100%;
+    padding: 0.3rem;
+    font-size: 0.7rem;
+  }
 </style>
 
 <mat-toolbar color="accent">
-  <div class="titulo">
-    <span>Sistema de gestion de pedidos</span>
+  <div class="titulo" (click)="home()">
+    <span>Sistema de gestión de pedidos</span>
   </div>
   <span class="spacer"></span> <!-- Elemento de espaciado -->
   <span *ngIf="authService.isLoggedIn && !isSmallScreen">{{authService.nombre}}</span>
-  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with menu icon"
-          [@menuIconAnimation]="menuState" (click)="toggleMenu()">
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with menu icon" (click)="toggleMenu()">
     <mat-icon>menu</mat-icon>
+    <span *ngIf="productosCount > 0" class="notification-badge">{{productosCount}}</span>
   </button>
   <mat-menu #menu="matMenu">
       <p mat-menu-item *ngIf="authService.isLoggedIn && isSmallScreen" disabled>{{authService.nombre}}</p>
-      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN'" (click)="registrarUsuario()">Registrar usuario</button>
-      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="nuevoProducto()">Nuevo Producto</button>
-      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="productos()">Ver Productos</button>
-      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="insumos()">Insumos</button>
-      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'USER'" (click)="carrito()">Ver Carrito</button>
-      <button mat-menu-item *ngIf="!authService.isLoggedIn" (click)="iniciarSesion()">Iniciar sesión</button>
-      <button mat-menu-item *ngIf="!authService.isLoggedIn" (click)="registrarse()">Registrarse</button>
-      <button mat-menu-item *ngIf="authService.isLoggedIn" (click)="cerrarSesion()">Cerrar sesion</button>
+      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN'" (click)="registrarUsuario()"><mat-icon>person_add</mat-icon>Registrar usuario</button>
+      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="nuevoProducto()"><mat-icon>add</mat-icon>Nuevo Producto</button>
+      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="productos()"><mat-icon>create</mat-icon>Ver Productos</button>
+      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="insumos()"><mat-icon>create</mat-icon>Insumos</button>
+      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'USER'" (click)="carrito()"><mat-icon>shopping_cart</mat-icon>Ver Carrito</button>
+      <button mat-menu-item *ngIf="!authService.isLoggedIn" (click)="iniciarSesion()"><mat-icon>login</mat-icon>Iniciar sesión</button>
+      <button mat-menu-item *ngIf="!authService.isLoggedIn" (click)="registrarse()"><mat-icon>person_add</mat-icon>Registrarse</button>
+      <button mat-menu-item *ngIf="authService.isLoggedIn" (click)="cerrarSesion()"><mat-icon>logout</mat-icon>Cerrar sesion</button>
   </mat-menu>
 </mat-toolbar>
 

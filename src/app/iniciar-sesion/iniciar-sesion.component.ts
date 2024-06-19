@@ -44,7 +44,11 @@ export class IniciarSesionComponent implements OnInit {
           console.log('Se inicio sesion exitosamente', data);
           this.authService.setToken(data.token!);
           this.authService.setLoggedIn(true, data.role, data.nombre);
-          this.router.navigate(['/home']);
+          if (data.role === 'USER') {
+            this.router.navigate(['/home']);
+          } else if (data.role === 'ADMIN') {
+            this.router.navigate(['/productos']);
+          }
         },
         error: (error) => {
           console.error('Error al iniciar sesion', error);

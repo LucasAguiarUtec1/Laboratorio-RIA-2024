@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { CarritoService } from '../Services/carrito.service';
+import { PedidosServiceService } from '../Services/pedidos-service.service';
+import { AuthService } from '../Services/auth-service.service';
 
 @Component({
   selector: 'app-carrito',
@@ -11,11 +13,16 @@ export class CarritoComponent implements OnInit {
   productosEnCarrito: any[] = [];
   carritoForm: FormGroup;
   totalPrecio: number = 0;
+  productosCount: number = 0;
+  minDate: Date = new Date();
 
-  constructor(private carritoService: CarritoService, private fb: FormBuilder) {
+  constructor(private carritoService: CarritoService, private fb: FormBuilder, private PedidosService: PedidosServiceService, private authService: AuthService,) {
     this.carritoForm = this.fb.group({
-      productos: this.fb.array([])
+      productos: this.fb.array([]),
+      fechaEntrega: [''],
+
     });
+    this.minDate.setDate(this.minDate.getDate() + 1);
   }
 
   ngOnInit() {
@@ -33,13 +40,43 @@ export class CarritoComponent implements OnInit {
       this.productos.push(this.fb.group({
         nombre: producto.nombre,
         precio: producto.precio,
-        cantidad: producto.cantidad
+        cantidad: [producto.cantidad, [Validators.required, Validators.min(1)]]
       }));
     });
-    this.productos.valueChanges.subscribe(() => this.calcularTotal());
+    this.productos.valueChanges.subscribe(() => {
+      this.calcularTotal();
+      this.productosCount = this.productos.length;
+    });
   }
 
   calcularTotal() {
     this.totalPrecio = this.productos.value.reduce((acc: number, producto: any) => acc + producto.precio * producto.cantidad, 0);
+  }
+
+  eliminarProducto(index: number) {
+    this.carritoService.eliminarProducto(index);
+    this.productos.removeAt(index);
+    this.calcularTotal(); 
+    this.productosCount = this.productos.length;
+  }
+
+  confirmarPedido() {
+    if (this.carritoForm.valid) {
+      const pedido = this.carritoForm.value;
+      pedido.productosPedido = pedido.productos;
+      delete pedido.productos;
+      pedido.precioTotal = this.totalPrecio;
+      pedido.email = this.authService.nombre;
+        this.PedidosService.agregarPedido(pedido).subscribe({
+        next: (respuesta) => {
+          // Maneja la respuesta del servidor
+          console.log('Pedido enviado con éxito', respuesta);
+        },
+        error: (error) => {
+          // Maneja el error
+          console.error('Error al enviar el pedido', error);
+        }
+      });
+    }
   }
 }

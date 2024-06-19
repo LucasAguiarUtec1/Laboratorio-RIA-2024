@@ -3,6 +3,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Router } from '@angular/router';
 import { AuthService } from './Services/auth-service.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { CarritoService } from './Services/carrito.service';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit {
   title = 'Laboratorio';
   isLoggedIn = false;
   isSmallScreen = false;
+  productosCount: number = 0;
 
   public menuState: String = "closed";
 
@@ -34,11 +36,15 @@ export class AppComponent implements OnInit {
     ]).subscribe(result => {
       this.isSmallScreen = result.matches;
     });
+    this.carritoService.productosCount$.subscribe(count => {
+      this.productosCount = count;
+    });
   }
 
   constructor(private router: Router,
     public authService: AuthService,
     public breakpointObserver: BreakpointObserver,
+    public carritoService: CarritoService
   ){} 
 
   toggleMenu() {
@@ -75,7 +81,11 @@ export class AppComponent implements OnInit {
   }
 
   home() {
-    this.router.navigate(['/home']);
+    if (this.authService.role === 'USER') {
+      this.router.navigate(['/home']);
+    } else if (this.authService.role === 'ADMIN') {
+      this.router.navigate(['/productos']);
+    }
   }
 
   carrito() {

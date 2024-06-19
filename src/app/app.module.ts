@@ -29,6 +29,8 @@ import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-p
 import { HomePageComponent } from './home-page/home-page.component'; 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CarritoComponent } from './carrito/carrito.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -59,7 +61,9 @@ import { CarritoComponent } from './carrito/carrito.component';
     HttpClientModule,
     MatDialogModule,
     MatSelectModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     provideClientHydration(),
