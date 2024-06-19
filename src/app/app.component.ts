@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router,
     public authService: AuthService,
-    public breakpointObserver: BreakpointObserver
+    public breakpointObserver: BreakpointObserver,
   ){} 
 
   toggleMenu() {
@@ -72,5 +72,13 @@ export class AppComponent implements OnInit {
 
   registrarUsuario() { 
     this.router.navigate(['/registrarse']);
+  }
+
+  home() {
+    this.router.navigate(['/home']);
+  }
+
+  carrito() {
+    this.router.navigate(['/carrito']);
   }
 }

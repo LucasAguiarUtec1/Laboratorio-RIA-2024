@@ -23,7 +23,7 @@ export class ForgotPasswordDialogComponent {
           console.log('Se envio correctamente', data);
         },
         error: (error) => {
-          console.error('Error al iniciar sesion', error);
+          console.error('Error al enviar el mail', error);
         }
       });
     }

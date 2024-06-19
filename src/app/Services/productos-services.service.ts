@@ -12,7 +12,7 @@ export class ProductosServicesService {
   private apiUrl = 'http://localhost:3000/productos';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
-  private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzE3MDkzNDI2LCJleHAiOjE3MTcwOTcwMjZ9.2ukGys1roNxh9Uyba22Ft32eRZHffoXD2DSZuQDEIOE';
+  // private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzE3MDkzNDI2LCJleHAiOjE3MTcwOTcwMjZ9.2ukGys1roNxh9Uyba22Ft32eRZHffoXD2DSZuQDEIOE';
 
   // getProductos(): Observable<Producto[]> {
   //   const token = this.authService.getToken();

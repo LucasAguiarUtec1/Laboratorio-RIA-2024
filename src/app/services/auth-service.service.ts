@@ -19,13 +19,11 @@ export class AuthService {
   }
 
   setToken(token: string | null) {
-    console.log('Token asignado:', token);
     this.tokenSubject.next(token);
   }
 
   getToken() {
     const token = this.tokenSubject.value;
-    console.log('Token obtenido:', token); // Agrega esta línea
     return token;
   }
 

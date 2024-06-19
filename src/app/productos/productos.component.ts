@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProductosServicesService } from '../services/productos-services.service';
+import { ProductosServicesService } from '../Services/productos-services.service';
 import { Producto } from '../models/producto';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';

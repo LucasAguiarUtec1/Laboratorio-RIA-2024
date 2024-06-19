@@ -23,9 +23,9 @@ export class LabBackendService {
     return this.http.post<Usuario>(url, body);
   }
 
-  olvioContrasena(email: string): Observable<any> {
+  olvioContrasena(email: string): Observable<Usuario> {
     const url = `${this.apiUrl}/usuarios/forgot-password`; // Asume que la ruta de registro en tu servidor es '/register'
     const body = { email };
-    return this.http.post<any>(url, body);
+    return this.http.post<Usuario>(url, body);
   }
 }

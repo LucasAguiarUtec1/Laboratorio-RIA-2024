@@ -25,7 +25,11 @@ import { EditarProductoComponent } from './editar-producto/editar-producto.compo
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { MatSelectModule } from '@angular/material/select';
-import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-password-dialog.component'; 
+import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-password-dialog.component';
+import { HomePageComponent } from './home-page/home-page.component'; 
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { CarritoComponent } from './carrito/carrito.component';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +40,9 @@ import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-p
     RegistrarseComponent,
     IniciarSesionComponent,
     EditarProductoComponent,
-    ForgotPasswordDialogComponent
+    ForgotPasswordDialogComponent,
+    HomePageComponent,
+    CarritoComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +58,8 @@ import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-p
     MatTableModule,
     HttpClientModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    FlexLayoutModule
   ],
   providers: [
     provideClientHydration(),

@@ -7,4 +7,5 @@ export class Producto {
     insumos: Insumo[] = [];
     imagen: string = '';
     precio: number = 0;
+    mostrarDescripcionCompleta?: boolean = false;
 }

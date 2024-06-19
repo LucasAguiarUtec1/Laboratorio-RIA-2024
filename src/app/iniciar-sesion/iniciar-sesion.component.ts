@@ -4,6 +4,7 @@ import { LabBackendService } from '../Services/lab-backend.service';
 import { AuthService } from '../Services/auth-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ForgotPasswordDialogComponent } from '../forgot-password-dialog/forgot-password-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -18,7 +19,8 @@ export class IniciarSesionComponent implements OnInit {
 
   constructor(private labBackendService: LabBackendService,
               private authService: AuthService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private router: Router) { }
 
   openForgotPasswordDialog() {
     this.dialog.open(ForgotPasswordDialogComponent, {
@@ -42,6 +44,7 @@ export class IniciarSesionComponent implements OnInit {
           console.log('Se inicio sesion exitosamente', data);
           this.authService.setToken(data.token!);
           this.authService.setLoggedIn(true, data.role, data.nombre);
+          this.router.navigate(['/home']);
         },
         error: (error) => {
           console.error('Error al iniciar sesion', error);

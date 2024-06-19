@@ -1,0 +1,116 @@
+<style>
+    .product-card {
+        display: flex; /* Utiliza flexbox para el layout */
+        flex-direction: row; /* Alinea los elementos en una fila */
+        margin: 10px; /* Margen deseado para las tarjetas */
+        min-height: 150px; 
+        justify-content: space-between; /* Alinea los elementos a cada extremo */
+        align-items: center; /* Alinea los elementos verticalmente al centro */
+    }
+    
+    .card-text-content, .card-image-content {
+        flex: 1; /* Permite que ambos contenedores ocupen espacio disponible de manera equitativa */
+    }
+
+    .card-text-content {
+        display: flex; /* Mantiene Flexbox */
+        flex-direction: column; /* Organiza los hijos en columna */
+        justify-content: space-between; /* Distribuye el espacio */
+        padding-right: 5px; /* Espacio entre texto e imagen */
+        height: 100%; /* Asegura que ocupe toda la altura de la tarjeta */
+    }
+
+    .card-image-content {
+        display: flex;
+        justify-content: flex-end; /* Alinea la imagen a la derecha */
+    }
+
+    @media screen and (max-width: 650px) {
+        .product-card {
+            width: calc(100% - 20px); /* Ancho deseado para las tarjetas en pantallas pequeñas */
+        }
+    }
+
+    @media screen and (min-width: 651px) and (max-width: 900px) {
+        .product-card {
+            width: calc(50% - 20px); /* Ancho deseado para las tarjetas en pantallas medianas */
+        }
+    }
+
+    @media screen and (min-width: 901px) and (max-width: 1200px) {
+        .product-card {
+            width: calc(33% - 20px); /* Ancho deseado para las tarjetas en pantallas grandes */
+        }
+    }
+
+    @media screen and (min-width: 1201px) {
+        .product-card {
+            width: calc(25% - 20px); /* Ancho deseado para las tarjetas en pantallas muy grandes */
+        }
+    }
+
+    .titulo, .precio {
+        flex: 0 1 auto; /* No permite que el título o el precio crezcan, pero sí que se encojan */
+    }
+
+    .descripcion {
+        flex: 1 1 auto; /* Permite que la descripción crezca y se encoja */
+        overflow: hidden; /* Oculta el contenido que sobrepase el tamaño */
+    }
+
+    .titulo {
+        min-height: 40px; /* Altura mínima para el título */
+    }
+
+    .precio {
+        min-height: 20px; /* Altura mínima para el precio */
+        font-weight: bold;
+    }
+
+    .text-button {
+        background-color: transparent; /* Elimina el fondo */
+        box-shadow: none; /* Elimina cualquier sombra */
+        padding: 0; /* Elimina el relleno */
+        border: none; /* Elimina el borde */
+        font-size: 12px; /* Tamaño del texto */
+    }
+
+    .text-button:hover {
+        background-color: transparent; /* Mantiene el fondo transparente incluso al pasar el mouse */
+        text-decoration: underline; /* Opcional: añade subrayado al pasar el mouse para indicar que es clickeable */
+    }
+
+    .precioCar {
+        display: flex;
+    }
+</style>
+
+<div class="product-grid" fxLayout="row wrap" fxLayoutAlign="start">
+    <mat-card *ngFor="let producto of productos" class="product-card">
+        <div class="card-text-content">
+            <mat-card-header>
+                <mat-card-title class="titulo">{{ producto.nombre }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="descripcion">
+                <p *ngIf="!producto.mostrarDescripcionCompleta">{{ producto.descripcion.length > 50 ? (producto.descripcion | slice:0:50) + '...' : producto.descripcion }}</p>
+                <p *ngIf="producto.mostrarDescripcionCompleta">{{ producto.descripcion }}</p>
+                <button mat-button class="text-button" *ngIf="producto.descripcion.length > 50" (click)="toggleDescripcion(producto)">Ver más</button>
+            </mat-card-content>
+            <div class="precioCar">
+                <mat-card-content class="precio">
+                    <p>Precio: ${{ producto.precio }}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button (click)="agregarAlCarrito(producto)">
+                        <mat-icon class="mi-icono-personalizado">add_shopping_cart</mat-icon>
+                    </button>
+                </mat-card-actions>
+            </div>
+        </div>
+        <div class="card-image-content">
+            <mat-card-content class="imagen">
+                <img [src]="producto.imagen" alt="Imagen del producto" style="width: 100px; height: 100px;">
+            </mat-card-content>
+        </div>
+    </mat-card>
+</div>
