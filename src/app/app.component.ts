@@ -64,16 +64,20 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/productos']);
   }
 
-  insumos() {
-    this.router.navigate(['/insumos']);
-  }
-
   registrarse() {
     this.router.navigate(['/registrarse']);
   }
 
   iniciarSesion() { 
     this.router.navigate(['/iniciarSesion']);
+  }
+
+  nuevoInsumo() {
+    this.router.navigate(['/nuevoInsumo']);
+  }
+
+  insumos() {
+    this.router.navigate(['/insumos']);
   }
 
   registrarUsuario() { 

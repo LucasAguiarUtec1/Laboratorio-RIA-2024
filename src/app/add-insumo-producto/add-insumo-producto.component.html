@@ -1,0 +1,22 @@
+<div class="container">
+    <h3>Agregar Insumos al Producto</h3>
+  
+    <!-- Selección de insumos disponibles -->
+    <mat-form-field>
+      <mat-label>Seleccionar Insumo</mat-label>
+      <mat-select [(ngModel)]="selectedInsumo">
+        <mat-option *ngFor="let insumo of resultado" [value]="insumo">
+          {{ insumo.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <!-- Cantidad del insumo -->
+    <mat-form-field>
+      <input matInput type="number" placeholder="Cantidad" [(ngModel)]="cantidad">
+    </mat-form-field>
+  
+    <!-- Botón para agregar insumo -->
+    <button mat-raised-button color="primary" (click)="agregarInsumo()">Agregar Insumo</button>
+  </div>
+  

@@ -32,17 +32,19 @@ export class ProductosServicesService {
     return this.http.delete<Producto[]>(`${this.apiUrl}/${id}`);
   }
 
+  addInsumoToProduct(id: number, insumoId: number): Observable<Producto> {
+    return this.http.post<Producto>(`${this.apiUrl}/${id}/insumos/`, {insumoId});
+  }
+
+  deleteInsumoFromProducto(id: number, insumoId: number): Observable<Producto> {
+    return this.http.delete<Producto>(`${this.apiUrl}/${id}/insumos/${insumoId}`);
+  }
+
   editProducto(producto: Producto): Observable<Producto> {
     return this.http.put<Producto>(`${this.apiUrl}/${producto.id}`, producto);
   }
 
-
-  getInsumos(): Observable<Insumo[]> {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.get<Insumo[]>(this.apiUrl + 'insumos', {headers});
+  getProductoById(id: number): Observable<Producto> {
+    return this.http.get<Producto>(`${this.apiUrl}/${id}`);
   }
 }

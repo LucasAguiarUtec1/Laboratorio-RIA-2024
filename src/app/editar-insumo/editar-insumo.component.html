@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Editar Insumo</h1>
+<div class="container">
+    <mat-card class="form-card">
+      <form [formGroup]="editInsumo" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" required>
+          <mat-error *ngIf="editInsumo.get('nombre')?.hasError('required')">El nombre es requerido</mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Unidad</mat-label>
+          <input matInput formControlName="unidad">
+          <mat-error *ngIf="editInsumo.get('unidad')?.hasError('required')">La unidad es requerida</mat-error>
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" type="submit">Enviar</button>
+      </form>
+    </mat-card>
+</div>

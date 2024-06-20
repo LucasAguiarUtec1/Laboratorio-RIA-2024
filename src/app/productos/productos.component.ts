@@ -4,25 +4,31 @@ import { Producto } from '../models/producto';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarProductoComponent } from '../editar-producto/editar-producto.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
-  styleUrl: './productos.component.css',
+  styleUrls: ['./productos.component.css'],
 })
 export class ProductosComponent {
 
   constructor(private productosService: ProductosServicesService, 
     private snackbar: MatSnackBar,
-    public modal: MatDialog){}
+    public modal: MatDialog,
+    private router: Router,
+  ){} // Elimina la inyección de dependencia del pipe
 
   productos: Producto[] = [];
+  filtroNombre: string = ''; // Agrega el filtro de nombre
 
-  displayedColumns: string[] = ['nombre', 'descripcion', 'imagen', 'precio', 'actions']
+  displayedColumns: string[] = ['nombre', 'descripcion', 'imagen', 'precio', 'actions'];
+
   getProductos() {
     this.productosService.getProductos().subscribe({
       next: (data: Producto[]) => {
           this.productos = data;
+          console.log(this.productos);
       },
       error: (error) => {
           console.error(error);
@@ -63,5 +69,18 @@ export class ProductosComponent {
   ngOnInit(): void {
     this.getProductos();
     console.log(this.productos);
+  }
+
+  filtrarProductos(productos: Producto[], filtroNombre: string): Producto[] {
+    if (!filtroNombre) {
+      return productos;
+    }
+    return productos.filter(producto => 
+      producto.nombre.toLowerCase().includes(filtroNombre.toLowerCase())
+    );
+  }
+
+  verInsumoProducto(id: number) {
+    this.router.navigate(['/insumoProducto', id]);
   }
 }
