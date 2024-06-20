@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { CarritoService } from '../Services/carrito.service';
 import { PedidosServiceService } from '../Services/pedidos-service.service';
 import { AuthService } from '../Services/auth-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carrito',
@@ -16,7 +17,11 @@ export class CarritoComponent implements OnInit {
   productosCount: number = 0;
   minDate: Date = new Date();
 
-  constructor(private carritoService: CarritoService, private fb: FormBuilder, private PedidosService: PedidosServiceService, private authService: AuthService,) {
+  constructor(private carritoService: CarritoService, 
+    private fb: FormBuilder, 
+    private PedidosService: PedidosServiceService, 
+    private authService: AuthService,
+    private router: Router) {
     this.carritoForm = this.fb.group({
       productos: this.fb.array([]),
       fechaEntrega: [''],
@@ -71,6 +76,14 @@ export class CarritoComponent implements OnInit {
         next: (respuesta) => {
           // Maneja la respuesta del servidor
           console.log('Pedido enviado con éxito', respuesta);
+          this.carritoService.vaciarCarrito();
+          this.productosEnCarrito = [];
+          this.productos.clear();
+          this.totalPrecio = 0;
+          this.productosCount = 0;
+          this.router.navigate(['/pedidos']);
+
+
         },
         error: (error) => {
           // Maneja el error

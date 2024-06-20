@@ -1,6 +1,6 @@
 export class Pedido {
-    idUser: number = 0;
-    productosPedido: any[] = [];
+    email: string = '';
+    productos: any[] = [];
     precioTotal: number = 0;
     fecha: string = '';
     estado: string = '';

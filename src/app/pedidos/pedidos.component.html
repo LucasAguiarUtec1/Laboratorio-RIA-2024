@@ -1,0 +1,108 @@
+<style>
+    .container { 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: flex-start; 
+        margin: 10px auto; 
+        width: 100%; 
+        box-sizing: border-box; 
+    }
+
+    .form-card { 
+        width: 80%; 
+        max-width: 1200px; 
+        box-sizing: border-box; 
+    }
+
+    .titulo { 
+        font-size: 1.5em; 
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .no-productos {
+        margin-top: 10px;
+        font-size: 1rem;
+        font-weight: 500; 
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .mat-elevation-z8 {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    }
+
+    .centrado-tabla th, .centrado-tabla td {
+        text-align: center; 
+    }
+
+    .centrado-tabla th mat-header-cell, .centrado-tabla td mat-cell {
+        flex: 1; 
+    }
+
+    .centrado-productos {
+        list-style-type: none; 
+        padding: 0;
+        margin: 0;
+    }
+
+    .centrado-productos li {
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        position: relative; 
+    }
+
+    .centrado-productos li::before {
+        content: '•'; 
+        margin-right: 0.5em; 
+    }
+</style>
+
+<div class="container">
+    <mat-card class="form-card">
+      <mat-card-title class="titulo">MIS PEDIDOS</mat-card-title>
+      <div *ngIf="pedidos.length === 0" class="no-productos">
+        <p>No tienes pedidos realizados</p>
+      </div>
+      <table *ngIf="pedidos.length > 0" mat-table [dataSource]="pedidos" class="mat-elevation-z8 centrado-tabla">
+  
+        <!-- Productos Column -->
+        <ng-container matColumnDef="productos">
+          <th mat-header-cell *matHeaderCellDef> Productos </th>
+          <td mat-cell *matCellDef="let pedido">
+            <ul class="centrado-productos">
+              <li *ngFor="let producto of pedido.productos">{{producto.cantidad}} x {{producto.nombre}}</li>
+            </ul>
+          </td>
+        </ng-container>
+  
+        <!-- Precio Column -->
+        <ng-container matColumnDef="precio">
+          <th mat-header-cell *matHeaderCellDef> Precio </th>
+          <td mat-cell *matCellDef="let pedido"> ${{pedido.precioTotal}} </td>
+        </ng-container>
+  
+        <!-- Fecha Column -->
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef> Fecha límite de entrega </th>
+          <td mat-cell *matCellDef="let pedido"> {{pedido.fecha}} </td>
+        </ng-container>
+  
+        <!-- Estado Column -->
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef> Estado </th>
+          <td mat-cell *matCellDef="let pedido"> {{pedido.estado}} </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card>
+  </div>
+

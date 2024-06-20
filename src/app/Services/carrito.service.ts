@@ -41,4 +41,9 @@ export class CarritoService {
   actualizarCuentaProductos() {
     this.productosCountSubject.next(this.productosEnCarrito.length);
   }
+
+  vaciarCarrito() {
+    this.productosEnCarrito = [];
+    this.actualizarCuentaProductos();
+  }
 }

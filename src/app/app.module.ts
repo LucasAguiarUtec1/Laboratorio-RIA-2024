@@ -31,6 +31,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CarritoComponent } from './carrito/carrito.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { PedidosComponent } from './pedidos/pedidos.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     EditarProductoComponent,
     ForgotPasswordDialogComponent,
     HomePageComponent,
-    CarritoComponent
+    CarritoComponent,
+    PedidosComponent
   ],
   imports: [
     BrowserModule,

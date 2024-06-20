@@ -91,4 +91,8 @@ export class AppComponent implements OnInit {
   carrito() {
     this.router.navigate(['/carrito']);
   }
+
+  pedidos() {
+    this.router.navigate(['/pedidos']);
+  }
 }
