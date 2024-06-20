@@ -8,6 +8,10 @@ import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.componen
 import { HomePageComponent } from './home-page/home-page.component';
 import { CarritoComponent } from './carrito/carrito.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
+import { InsumosProductoComponent } from './insumos-producto/insumos-producto.component';
+import { NuevoInsumoComponent } from './nuevo-insumo/nuevo-insumo.component';
+import { AddInsumoProductoComponent } from './add-insumo-producto/add-insumo-producto.component';
+
 
 const routes: Routes = [
   {path: "nuevoProducto" , component: NuevoProductoComponent},
@@ -18,7 +22,10 @@ const routes: Routes = [
   {path: '', redirectTo: '/iniciarSesion', pathMatch: 'full'}, 
   {path: 'home', component: HomePageComponent},
   {path: 'carrito', component: CarritoComponent},
-  {path: 'pedidos', component: PedidosComponent}
+  {path: 'pedidos', component: PedidosComponent},
+  {path: 'nuevoInsumo', component: NuevoInsumoComponent},
+  {path: 'insumoProducto/:id', component: InsumosProductoComponent},
+  {path: 'addInsumoProducto/:id', component: AddInsumoProductoComponent}
 ];
 
 @NgModule({
