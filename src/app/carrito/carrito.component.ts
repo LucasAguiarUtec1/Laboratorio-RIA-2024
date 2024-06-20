@@ -72,6 +72,7 @@ export class CarritoComponent implements OnInit {
       delete pedido.productos;
       pedido.precioTotal = this.totalPrecio;
       pedido.email = this.authService.nombre;
+      console.log('Pedido', pedido);
         this.PedidosService.agregarPedido(pedido).subscribe({
         next: (respuesta) => {
           // Maneja la respuesta del servidor

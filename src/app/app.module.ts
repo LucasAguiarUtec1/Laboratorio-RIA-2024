@@ -38,6 +38,7 @@ import { ProductoPipe } from './pipes/producto-pipe.pipe';
 import { InsumosPipe } from './pipes/insumos.pipe';
 
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { ProductosDialogComponent } from './productos-dialog/productos-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     InsumosProductoComponent,
     AddInsumoProductoComponent,
     ProductoPipe,
-    InsumosPipe
+    InsumosPipe,
+    ProductosDialogComponent
   ],
   imports: [
     BrowserModule,

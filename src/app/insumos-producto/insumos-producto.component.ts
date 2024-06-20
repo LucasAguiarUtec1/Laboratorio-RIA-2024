@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductoInsumo } from '../models/producto-insumo';
 import { InsumosService } from '../Services/insumos.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProductosServicesService } from '../services/productos-services.service';
+import { ProductosServicesService } from '../Services/productos-services.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Producto } from '../models/producto';
 import { Insumo } from '../models/insumo';

@@ -76,9 +76,7 @@
         <ng-container matColumnDef="productos">
           <th mat-header-cell *matHeaderCellDef> Productos </th>
           <td mat-cell *matCellDef="let pedido">
-            <ul class="centrado-productos">
-              <li *ngFor="let producto of pedido.productos">{{producto.cantidad}} x {{producto.nombre}}</li>
-            </ul>
+            <button mat-button (click)="openDialog(pedido.productos)">Ver productos</button>
           </td>
         </ng-container>
   
