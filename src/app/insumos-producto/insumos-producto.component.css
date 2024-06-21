@@ -1,16 +1,40 @@
 .table-responsive {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Para un desplazamiento suave en dispositivos táctiles */
-  }
-  
-  .table-responsive table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .table-responsive th,
-  .table-responsive td {
-    white-space: nowrap; /* Evita que el contenido de las celdas se ajuste */
-  }
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Para un desplazamiento suave en dispositivos táctiles */
+}
+
+.table-responsive table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-responsive th,
+.table-responsive td {
+  white-space: nowrap; /* Evita que el contenido de las celdas se ajuste */
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-cell {
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  height: 100%; /* Asegurar que la altura ocupe toda la celda */
+  padding: 0;
+}
+
+.mat-header-cell, .mat-cell {
+  text-align: center; /* Centrar el contenido horizontalmente */
+  vertical-align: middle; /* Asegurar que el contenido esté verticalmente centrado */
+}
+
+.mat-icon-button {
+  margin: 0 4px;
+}

@@ -39,6 +39,7 @@ import { InsumosPipe } from './pipes/insumos.pipe';
 
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { ProductosDialogComponent } from './productos-dialog/productos-dialog.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { ProductosDialogComponent } from './productos-dialog/productos-dialog.co
     MatSelectModule,
     FlexLayoutModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatPaginatorModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

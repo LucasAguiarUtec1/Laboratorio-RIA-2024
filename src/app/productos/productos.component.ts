@@ -1,26 +1,35 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ProductosServicesService } from '../Services/productos-services.service';
 import { Producto } from '../models/producto';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarProductoComponent } from '../editar-producto/editar-producto.component';
 import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
 })
-export class ProductosComponent {
+export class ProductosComponent implements AfterViewInit {
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private productosService: ProductosServicesService, 
     private snackbar: MatSnackBar,
     public modal: MatDialog,
     private router: Router,
-  ){} // Elimina la inyección de dependencia del pipe
+  ){}
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
 
   productos: Producto[] = [];
-  filtroNombre: string = ''; // Agrega el filtro de nombre
+  dataSource!: MatTableDataSource<Producto>;
+  filtroNombre: string = ''; 
 
   displayedColumns: string[] = ['nombre', 'descripcion', 'imagen', 'precio', 'actions'];
 
@@ -28,6 +37,9 @@ export class ProductosComponent {
     this.productosService.getProductos().subscribe({
       next: (data: Producto[]) => {
           this.productos = data;
+          this.dataSource = new MatTableDataSource<Producto>(this.productos);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.filterPredicate = this.customFilterPredicate();
           console.log(this.productos);
       },
       error: (error) => {
@@ -66,18 +78,27 @@ export class ProductosComponent {
     })
   }
 
+customFilterPredicate(): (data: Producto, filter: string) => boolean {
+  const filterFunction = (data: Producto, filter: string): boolean => {
+    return data.nombre.toLowerCase().includes(filter.toLowerCase());
+  };
+  return filterFunction;
+}
+
+
   ngOnInit(): void {
     this.getProductos();
     console.log(this.productos);
   }
 
-  filtrarProductos(productos: Producto[], filtroNombre: string): Producto[] {
-    if (!filtroNombre) {
-      return productos;
+  applyFilter() {
+    if (!this.dataSource) {
+      return;
     }
-    return productos.filter(producto => 
-      producto.nombre.toLowerCase().includes(filtroNombre.toLowerCase())
-    );
+    this.dataSource.filter = this.filtroNombre.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage(); // Volver a la primera página al aplicar un filtro
+    }
   }
 
   verInsumoProducto(id: number) {

@@ -1,7 +1,7 @@
-<input type="text" placeholder="Filtrar por nombre">
+<input type="text" placeholder="Filtrar por nombre" [(ngModel)]="filtroNombre" (keyup)="applyFilter()">
 <button mat-raised-button color="primary" (click)="addInsumo()">Añadir Insumo</button>
 <div class="table-responsive">
-  <table mat-table [dataSource]="resultado" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- ID Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -33,3 +33,4 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
