@@ -32,9 +32,10 @@ export class ProductosServicesService {
     return this.http.delete<Producto[]>(`${this.apiUrl}/${id}`);
   }
 
-  addInsumoToProduct(id: number, insumoId: number): Observable<Producto> {
-    return this.http.post<Producto>(`${this.apiUrl}/${id}/insumos/`, {insumoId});
+  addInsumoToProduct(id: number, insumoId: number, cantidad: number): Observable<Producto> {
+    return this.http.put<Producto>(`${this.apiUrl}/${id}/insumos/${insumoId}`, { cantidad });
   }
+  
 
   deleteInsumoFromProducto(id: number, insumoId: number): Observable<Producto> {
     return this.http.delete<Producto>(`${this.apiUrl}/${id}/insumos/${insumoId}`);

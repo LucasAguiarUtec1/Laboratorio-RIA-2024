@@ -1,15 +1,25 @@
-.container {
-  padding: 16px;
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Para un desplazamiento suave en dispositivos táctiles */
 }
 
-table {
+.table-responsive table {
   width: 100%;
+  border-collapse: collapse;
 }
+
+.table-responsive th,
+.table-responsive td {
+  white-space: nowrap; /* Evita que el contenido de las celdas se ajuste */
+}
+
 
 .product-image {
-  width: 50px;
-  height: auto;
-}
+    max-width: 100px;
+    height: auto;
+  }
 
 .buttonContainer {
   display: flex;

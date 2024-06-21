@@ -1,0 +1,30 @@
+/* Estilos para móviles primero */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Espaciado entre los elementos */
+    padding: 16px; /* Espaciado interno */
+  }
+  
+  .cantidad-container {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaciado entre el campo de cantidad y la unidad */
+  }
+  
+  .unidad {
+    font-size: 16px; /* Ajusta el tamaño de la unidad */
+  }
+  
+  /* Media query para pantallas más grandes */
+  @media (min-width: 600px) {
+    .container {
+      padding: 32px; /* Más espaciado interno en pantallas grandes */
+    }
+  
+    .button-container {
+      display: flex;
+      justify-content: flex-end; /* Alinea el botón a la derecha */
+    }
+  }
+  

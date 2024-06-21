@@ -1,5 +1,5 @@
-<input type="text" placeholder="Filtrar por nombre" [(ngModel)]="filtroNombre">
-<div class="container">
+<input matInput placeholder="Filtrar por nombre" [(ngModel)]="filtroNombre">
+<div class="table-responsive">
   <table mat-table [dataSource]="productos | producto: filtroNombre" class="mat-elevation-z8">
     <!-- ID Column -->
     <ng-container matColumnDef="id">

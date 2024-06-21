@@ -71,4 +71,25 @@ button[type="submit"] {
   width: 100%;
 }
 
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Para un desplazamiento suave en dispositivos táctiles */
+}
+
+  .table-responsive table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table-responsive th,
+  .table-responsive td {
+    white-space: nowrap; /* Evita que el contenido de las celdas se ajuste */
+  }
+
+  .product-image {
+    max-width: 100px;
+    height: auto;
+  }
 
