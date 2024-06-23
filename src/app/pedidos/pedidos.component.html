@@ -140,18 +140,16 @@
 
           <ng-container matColumnDef="panadero">
             <th mat-header-cell *matHeaderCellDef>
-                <div style="display: flex; flex-direction: column;">
-                    <span>
-                        Panadero
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <span>Panadero</span>
                         <mat-icon [matMenuTriggerFor]="menu" class="flechita" *ngIf="authService.role == 'PANADERO'">arrow_drop_down</mat-icon>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item (click)="ordenarPanadero(this.authService.nombre!)">Mis pedidos</button>
                             <button mat-menu-item (click)="ordenarPanadero('sinAsignar')">Sin asignar</button>
                         </mat-menu>
-                    </span>
                     <!-- Opción para eliminar filtro visible solo si el filtro de panadero está activo -->
-                    <span *ngIf="filtroPanaeroActivo || filtroPanaeroActivo2" (click)="eliminarFiltroPanadero()" style="cursor: pointer; font-size: 0.8em;">Eliminar filtro</span>
-                </div>
+                  </div>
+                <span *ngIf="filtroPanaeroActivo || filtroPanaeroActivo2" (click)="eliminarFiltroPanadero()" style="cursor: pointer; font-size: 0.8em;">Eliminar filtro</span>
             </th>
             <td mat-cell *matCellDef="let pedido" class="panadero-cell">
                 <ng-container *ngIf="authService.role === 'ADMIN' && pedido.panadero === 'sinAsignar'; else mostrarPanadero">
@@ -194,19 +192,17 @@
           <!-- Fecha Column -->
           <ng-container matColumnDef="fecha">
             <th mat-header-cell *matHeaderCellDef>
-              <div style="display: flex; flex-direction: column;">
-                <span>
-                  Fecha límite de entrega
-                  <mat-icon [matMenuTriggerFor]="menu" class="flechita">arrow_drop_down</mat-icon>
-                  <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="ordenar('ascendente')">Ascendente</button>
-                    <button mat-menu-item (click)="ordenar('descendente')">Descendente</button>
-                    <button mat-menu-item (click)="openRangoFechaDialog()">Rango</button>
-                  </mat-menu>
-                </span>
-                <!-- Opción para eliminar filtro visible solo si el filtro de rango está activo -->
-                <span *ngIf="filtroRangoActivo" (click)="eliminarFiltro()" style="cursor: pointer; font-size: 0.8em;">Eliminar filtro</span>
+              <div style="display: flex; align-items: center; justify-content: center; width: 200px;">
+                <span>Fecha límite de entrega</span>
+                <mat-icon [matMenuTriggerFor]="menu" class="flechita">arrow_drop_down</mat-icon>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="ordenar('ascendente')">Ascendente</button>
+                  <button mat-menu-item (click)="ordenar('descendente')">Descendente</button>
+                  <button mat-menu-item (click)="openRangoFechaDialog()">Rango</button>
+                </mat-menu>
               </div>
+              <!-- Opción para eliminar filtro visible solo si el filtro de rango está activo -->
+              <span *ngIf="filtroRangoActivo" (click)="eliminarFiltro()" style="cursor: pointer; font-size: 0.8em; display: block;">Eliminar filtro</span>
             </th>
             <td mat-cell *matCellDef="let pedido"> {{pedido.fecha}} </td>
           </ng-container>
@@ -214,18 +210,17 @@
           <!-- Estado Column -->
           <ng-container matColumnDef="estado">
             <th mat-header-cell *matHeaderCellDef> 
-              <div style="display: flex; flex-direction: column;">
-                <span>Estado 
-                  <mat-icon [matMenuTriggerFor]="menu" class="flechita">arrow_drop_down</mat-icon>
+              <div style="display: flex; align-items: center; justify-content: center;">
+                <span>Estado</span>
+                  <mat-icon [matMenuTriggerFor]="menu" class="flechita" style="align-items: center;">arrow_drop_down</mat-icon>
                   <mat-menu #menu="matMenu">
                     <button mat-menu-item (click)="ordenarEstado('pendiente')">Pendientes</button>
                     <button mat-menu-item (click)="ordenarEstado('en preparación')">En preparación</button>
                     <button mat-menu-item (click)="ordenarEstado('listo para entregar')">Listo para entregar</button>
                     <button mat-menu-item (click)="ordenarEstado('entregado')">Entregado</button>
                   </mat-menu>
-                </span>
-                <span *ngIf="filtroEstadoActivo || filtroEstadoActivo2" (click)="eliminarFiltroEstado()" style="cursor: pointer; font-size: 0.8em;">Eliminar filtro</span>
               </div>
+              <span *ngIf="filtroEstadoActivo || filtroEstadoActivo2" (click)="eliminarFiltroEstado()" style="cursor: pointer; font-size: 0.8em;">Eliminar filtro</span>
             </th>
             <td mat-cell *matCellDef="let pedido" [ngClass]="{'select-container': authService.role === 'PANADERO' || authService.role === 'ADMIN'}">
               <ng-container *ngIf="authService.role === 'PANADERO' || authService.role === 'ADMIN'; else soloVerEstado">
