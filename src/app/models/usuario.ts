@@ -4,4 +4,5 @@ export class Usuario {
     role: string = '';
     telefono: string = '';
     token?: string = '';
+    email: string = '';
   }

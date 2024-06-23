@@ -87,8 +87,8 @@ export class AppComponent implements OnInit {
   home() {
     if (this.authService.role === 'USER') {
       this.router.navigate(['/home']);
-    } else if (this.authService.role === 'ADMIN') {
-      this.router.navigate(['/productos']);
+    } else if (this.authService.role === 'ADMIN' || this.authService.role === 'PANADERO') {
+      this.router.navigate(['/pedidos']);
     }
   }
 

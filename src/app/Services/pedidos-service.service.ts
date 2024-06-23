@@ -19,4 +19,19 @@ export class PedidosServiceService {
     const body = { email };
     return this.http.post<Pedido[]>(`${this.apiUrl}/obtener-pedidos`, body);
   }
+
+  obtenerTodosLosPedidos(): Observable<Pedido[]> {
+    return this.http.get<Pedido[]>(`${this.apiUrl}/obtener-todos-los-pedidos`);
+  }
+
+  tomarPedido(pedido: Pedido, nombre: string): Observable<Pedido> {
+    const body = { pedido, nombre };
+    console.log(body);
+    return this.http.post<Pedido>(`${this.apiUrl}/tomar-pedido`, body);
+  }
+
+  cambiarEstadoPedido(pedido: Pedido, estado: string): Observable<Pedido> {
+    const body = { pedido, estado };
+    return this.http.post<Pedido>(`${this.apiUrl}/cambiar-estado-pedido`, body);
+  }
 }

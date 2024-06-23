@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Seleccionar rango de fechas</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill" style="margin-bottom: 10px;">
+    <mat-label>Desde</mat-label>
+    <input matInput [matDatepicker]="pickerInicio" [(ngModel)]="fechaInicio" (dateChange)="onFechaInicioChange($event.value)">
+    <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+    <mat-datepicker #pickerInicio></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Hasta</mat-label>
+    <input matInput [matDatepicker]="pickerFin" [(ngModel)]="fechaFin" [matDatepickerFilter]="fechaFinFilter">
+    <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFin></mat-datepicker>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="cerrar()">Aceptar</button>
+  <button mat-button mat-dialog-close>Cancelar</button>
+</mat-dialog-actions>

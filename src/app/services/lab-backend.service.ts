@@ -28,4 +28,8 @@ export class LabBackendService {
     const body = { email };
     return this.http.post<Usuario>(url, body);
   }
+
+  obtenerPanderos(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.apiUrl}/usuarios/obtener-panaderos`);
+  }
 }

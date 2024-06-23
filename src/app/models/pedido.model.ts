@@ -4,4 +4,5 @@ export class Pedido {
     precioTotal: number = 0;
     fecha: string = '';
     estado: string = '';
+    panadero: string = '';
 }

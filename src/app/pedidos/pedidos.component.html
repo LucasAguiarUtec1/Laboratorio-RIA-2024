@@ -31,6 +31,17 @@
     table {
         width: 100%;
         border-radius: 5px;
+        border-collapse: collapse;
+    }
+
+    .mat-row, .mat-header-row {
+      height: 50px; /* Altura fija para las filas */
+    }
+
+    .mat-cell, .mat-header-cell {
+        padding: 10px; /* Espaciado interno para el contenido */
+        text-align: center; /* Alineación horizontal centrada */
+        vertical-align: middle; /* Alineación vertical centrada */
     }
 
     .mat-elevation-z8 {
@@ -58,49 +69,188 @@
         position: relative; 
     }
 
-    .centrado-productos li::before {
-        content: '•'; 
-        margin-right: 0.5em; 
+    .select-container {
+      display: flex;
+      align-items: center; 
+    }
+
+    .small-select {
+      width: 100%;
+      font-size: 0.8rem; 
+      border: 1px solid #ccc;
+      border-radius: 5px;  
+    }
+
+    .select-container-panadero {
+      display: flex;
+      align-items: center; 
+    }
+
+    .flechita {
+        cursor: pointer; 
+    }
+
+    .table-container {
+        overflow-x: auto; 
+    }
+
+    ::ng-deep .mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align {
+      margin-bottom: -1.5rem !important; 
+      padding-bottom: 0 !important; 
+    }
+
+    .small-select-panadero {
+      width: calc(100% - 2px); 
+      font-size: 0.8rem; 
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .email-container {
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
     }
 </style>
 
 <div class="container">
     <mat-card class="form-card">
-      <mat-card-title class="titulo">MIS PEDIDOS</mat-card-title>
-      <div *ngIf="pedidos.length === 0" class="no-productos">
+      <mat-card-title class="titulo">PEDIDOS</mat-card-title>
+      <div *ngIf="pedidos.data.length === 0 && !filtroRangoActivo && !filtroEstadoActivo && !filtroUsuarioActivo && !filtroPanaeroActivo; else mostrarTabla" class="no-productos">
         <p>No tienes pedidos realizados</p>
       </div>
-      <table *ngIf="pedidos.length > 0" mat-table [dataSource]="pedidos" class="mat-elevation-z8 centrado-tabla">
-  
-        <!-- Productos Column -->
-        <ng-container matColumnDef="productos">
-          <th mat-header-cell *matHeaderCellDef> Productos </th>
-          <td mat-cell *matCellDef="let pedido">
-            <button mat-button (click)="openDialog(pedido.productos)">Ver productos</button>
-          </td>
+      <ng-template #mostrarTabla>
+        <div *ngIf="pedidos.data.length === 0 && (filtroRangoActivo || filtroEstadoActivo || filtroPanaeroActivo || filtroUsuarioActivo)" class="no-productos">
+          <p>No hay pedidos que cumplan con el filtro seleccionado</p>
+        </div>
+        <div *ngIf="authService.role === 'PANADERO' || authService.role === 'ADMIN'" class="search-bar">
+          <mat-form-field>
+            <mat-label>Buscar por usuario</mat-label>
+            <input matInput (keyup)="applyUserFilter($event)" placeholder="Ingrese el email del usuario">
+          </mat-form-field>
+        </div>
+        <div class="table-container">
+        <table mat-table [dataSource]="pedidos" mat-sort class="mat-elevation-z8 centrado-tabla">
+
+          
+          <ng-container matColumnDef="usuario">
+            <th mat-header-cell *matHeaderCellDef> Usuario </th>
+            <td mat-cell *matCellDef="let pedido"> {{pedido.email}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="panadero">
+            <th mat-header-cell *matHeaderCellDef>
+                <div style="display: flex; flex-direction: column;">
+                    <span>
+                        Panadero
+                        <mat-icon [matMenuTriggerFor]="menu" class="flechita" *ngIf="authService.role == 'PANADERO'">arrow_drop_down</mat-icon>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="ordenarPanadero(this.authService.nombre!)">Mis pedidos</button>
+                            <button mat-menu-item (click)="ordenarPanadero('sinAsignar')">Sin asignar</button>
+                        </mat-menu>
+                    </span>
+                    <!-- Opción para eliminar filtro visible solo si el filtro de panadero está activo -->
+                    <span *ngIf="filtroPanaeroActivo || filtroPanaeroActivo2" (click)="eliminarFiltroPanadero()" style="cursor: pointer; font-size: 0.8em;">Eliminar filtro</span>
+                </div>
+            </th>
+            <td mat-cell *matCellDef="let pedido" class="panadero-cell">
+                <ng-container *ngIf="authService.role === 'ADMIN' && pedido.panadero === 'sinAsignar'; else mostrarPanadero">
+                    <mat-form-field [ngClass]="{'small-select-panadero': authService.role === 'ADMIN' && pedido.panadero === 'sinAsignar'}">
+                        <mat-label>Asignar Panadero</mat-label>
+                        <mat-select (selectionChange)="asignarPanaderoAdmin(pedido, $event.value)">
+                            <mat-option *ngFor="let panadero of panaderos" [value]="panadero.email">
+                                {{ panadero.email }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </ng-container>
+                <!-- Template para mostrar si pedido.panadero está asignado o el usuario no es ADMIN -->
+                <ng-template #mostrarPanadero>
+                    <div *ngIf="pedido.panadero !== 'sinAsignar'; else tomarPedidoTemplate" class="email-container">
+                        {{ pedido.panadero }}
+                    </div>
+                    <ng-template #tomarPedidoTemplate>
+                        <button mat-button (click)="tomarPedido(pedido)">Tomar pedido</button>
+                    </ng-template>
+                </ng-template>
+            </td>
         </ng-container>
-  
-        <!-- Precio Column -->
-        <ng-container matColumnDef="precio">
-          <th mat-header-cell *matHeaderCellDef> Precio </th>
-          <td mat-cell *matCellDef="let pedido"> ${{pedido.precioTotal}} </td>
-        </ng-container>
-  
-        <!-- Fecha Column -->
-        <ng-container matColumnDef="fecha">
-          <th mat-header-cell *matHeaderCellDef> Fecha límite de entrega </th>
-          <td mat-cell *matCellDef="let pedido"> {{pedido.fecha}} </td>
-        </ng-container>
-  
-        <!-- Estado Column -->
-        <ng-container matColumnDef="estado">
-          <th mat-header-cell *matHeaderCellDef> Estado </th>
-          <td mat-cell *matCellDef="let pedido"> {{pedido.estado}} </td>
-        </ng-container>
-  
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+        
+          
+          <!-- Productos Column -->
+          <ng-container matColumnDef="productos">
+            <th mat-header-cell *matHeaderCellDef> Productos </th>
+            <td mat-cell *matCellDef="let pedido">
+              <button mat-button (click)="openDialog(pedido.productos)">Ver productos</button>
+            </td>
+          </ng-container>
+    
+          <!-- Precio Column -->
+          <ng-container matColumnDef="precio">
+            <th mat-header-cell *matHeaderCellDef> Precio </th>
+            <td mat-cell *matCellDef="let pedido"> ${{pedido.precioTotal}} </td>
+          </ng-container>
+    
+          <!-- Fecha Column -->
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef>
+              <div style="display: flex; flex-direction: column;">
+                <span>
+                  Fecha límite de entrega
+                  <mat-icon [matMenuTriggerFor]="menu" class="flechita">arrow_drop_down</mat-icon>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="ordenar('ascendente')">Ascendente</button>
+                    <button mat-menu-item (click)="ordenar('descendente')">Descendente</button>
+                    <button mat-menu-item (click)="openRangoFechaDialog()">Rango</button>
+                  </mat-menu>
+                </span>
+                <!-- Opción para eliminar filtro visible solo si el filtro de rango está activo -->
+                <span *ngIf="filtroRangoActivo" (click)="eliminarFiltro()" style="cursor: pointer; font-size: 0.8em;">Eliminar filtro</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let pedido"> {{pedido.fecha}} </td>
+          </ng-container>
+    
+          <!-- Estado Column -->
+          <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef> 
+              <div style="display: flex; flex-direction: column;">
+                <span>Estado 
+                  <mat-icon [matMenuTriggerFor]="menu" class="flechita">arrow_drop_down</mat-icon>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="ordenarEstado('pendiente')">Pendientes</button>
+                    <button mat-menu-item (click)="ordenarEstado('en preparación')">En preparación</button>
+                    <button mat-menu-item (click)="ordenarEstado('listo para entregar')">Listo para entregar</button>
+                    <button mat-menu-item (click)="ordenarEstado('entregado')">Entregado</button>
+                  </mat-menu>
+                </span>
+                <span *ngIf="filtroEstadoActivo || filtroEstadoActivo2" (click)="eliminarFiltroEstado()" style="cursor: pointer; font-size: 0.8em;">Eliminar filtro</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let pedido" [ngClass]="{'select-container': authService.role === 'PANADERO' || authService.role === 'ADMIN'}">
+              <ng-container *ngIf="authService.role === 'PANADERO' || authService.role === 'ADMIN'; else soloVerEstado">
+                <!-- Verifica si el usuario actual es el panadero asignado -->
+                <mat-form-field appearance="fill" [ngClass]="{'small-select': authService.role === 'PANADERO' || authService.role === 'ADMIN'}">
+                  <mat-select [(value)]="pedido.estado" (selectionChange)="cambiarEstado(pedido, $event.value)" [disabled]="pedido.panadero !== authService.nombre">
+                    <mat-option value="pendiente">Pendiente</mat-option>
+                    <mat-option value="en preparación">En preparación</mat-option>
+                    <mat-option value="listo para entregar">Listo para entregar</mat-option>
+                    <mat-option value="entregado">Entregado</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </ng-container>
+              <ng-template #soloVerEstado>
+                {{ pedido.estado }}
+              </ng-template>
+            </td>
+          </ng-container>
+    
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+      </ng-template>
+      <mat-paginator [pageSize]="5" [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
     </mat-card>
   </div>
 

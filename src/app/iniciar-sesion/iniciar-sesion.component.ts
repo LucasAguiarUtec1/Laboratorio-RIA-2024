@@ -46,8 +46,8 @@ export class IniciarSesionComponent implements OnInit {
           this.authService.setLoggedIn(true, data.role, data.nombre);
           if (data.role === 'USER') {
             this.router.navigate(['/home']);
-          } else if (data.role === 'ADMIN') {
-            this.router.navigate(['/productos']);
+          } else if (data.role === 'ADMIN' || data.role === 'PANADERO') {
+            this.router.navigate(['/pedidos']);
           }
         },
         error: (error) => {
