@@ -1,40 +1,117 @@
-.table-responsive {
-  display: block;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 10px auto;
   width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch; /* Para un desplazamiento suave en dispositivos táctiles */
+  box-sizing: border-box;
 }
 
-.table-responsive table {
+.form-card {
+  width: 80%;
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+
+.titulo {
+  font-size: 1.5em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.no-productos {
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+table {
   width: 100%;
+  border-radius: 5px;
   border-collapse: collapse;
 }
 
-.table-responsive th,
-.table-responsive td {
-  white-space: nowrap; /* Evita que el contenido de las celdas se ajuste */
+.mat-row,
+.mat-header-row {
+  height: 50px;
 }
 
-.buttonContainer {
+.mat-cell,
+.mat-header-cell {
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.centrado-tabla th,
+.centrado-tabla td {
+  text-align: center;
+}
+
+.centrado-productos {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.centrado-productos li {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  position: relative;
 }
 
-.action-cell {
+.select-container {
   display: flex;
-  justify-content: center; /* Centrar horizontalmente */
-  align-items: center; /* Centrar verticalmente */
-  height: 100%; /* Asegurar que la altura ocupe toda la celda */
-  padding: 0;
+  align-items: center;
 }
 
-.mat-header-cell, .mat-cell {
-  text-align: center; /* Centrar el contenido horizontalmente */
-  vertical-align: middle; /* Asegurar que el contenido esté verticalmente centrado */
+.small-select {
+  width: 100%;
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.mat-icon-button {
-  margin: 0 4px;
+.select-container-panadero {
+  display: flex;
+  align-items: center;
+}
+
+.flechita {
+  cursor: pointer;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align {
+  margin-bottom: -1.5rem !important;
+  padding-bottom: 0 !important;
+}
+
+.small-select-panadero {
+  width: calc(100% - 2px);
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.email-container {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+
+.product-image {
+  max-width: 50px;
+  height: auto;
 }

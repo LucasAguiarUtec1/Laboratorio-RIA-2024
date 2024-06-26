@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ProductosServicesService } from '../Services/productos-services.service';
 import { Producto } from '../models/producto';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,55 +7,64 @@ import { EditarProductoComponent } from '../editar-producto/editar-producto.comp
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { AuthService } from '../Services/auth-service.service';
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
 })
-export class ProductosComponent implements AfterViewInit {
+export class ProductosComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private productosService: ProductosServicesService, 
+  constructor(
+    private productosService: ProductosServicesService, 
     private snackbar: MatSnackBar,
     public modal: MatDialog,
     private router: Router,
+    public authService: AuthService
   ){}
+
+  productos: Producto[] = [];
+  dataSource: MatTableDataSource<Producto> = new MatTableDataSource<Producto>([]);
+  filtroNombre: string = ''; 
+  displayedColumns: string[] = ['id', 'nombre', 'descripcion', 'imagen', 'precio', 'actions'];
+
+  ngOnInit(): void {
+    this.getProductos();
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
 
-  productos: Producto[] = [];
-  dataSource!: MatTableDataSource<Producto>;
-  filtroNombre: string = ''; 
-
-  displayedColumns: string[] = ['nombre', 'descripcion', 'imagen', 'precio', 'actions'];
-
   getProductos() {
     this.productosService.getProductos().subscribe({
       next: (data: Producto[]) => {
           this.productos = data;
-          this.dataSource = new MatTableDataSource<Producto>(this.productos);
+          this.dataSource.data = this.productos;
           this.dataSource.paginator = this.paginator;
           this.dataSource.filterPredicate = this.customFilterPredicate();
-          console.log(this.productos);
       },
       error: (error) => {
           console.error(error);
-          this.snackbar.open('Error al cargar los productos', 'Cerrar', 
-            {duration: 3000}
-          );
+          this.snackbar.open('Error al cargar los productos', 'Cerrar', { duration: 3000 });
       }
     });
   }
 
-  openEditModal(producto: any, prodId: number): void {
+  openEditModal(producto: Producto): void {
     const modal = this.modal.open(EditarProductoComponent, {
-      width: '300px',
+      width: '500px',
+      height: '600px',
       data: producto
     });
+
+    modal.afterClosed().subscribe(res => {
+      this.getProductos();
+    }
+    )
   }
 
   eliminarProducto(id: number) {
@@ -64,31 +73,20 @@ export class ProductosComponent implements AfterViewInit {
         const deletedProducto = data[0];
         const deletedProductoIndex = this.productos.findIndex(p => p.id == deletedProducto.id);
         this.productos.splice(deletedProductoIndex, 1);
-        this.productos = [...this.productos];
-        this.snackbar.open('Producto Eliminado', 'Cerrar',
-          {duration: 3000}
-        );
+        this.dataSource.data = this.productos;
+        this.snackbar.open('Producto Eliminado', 'Cerrar', { duration: 3000 });
       },
       error: (error) => {
         console.log(error);
-        this.snackbar.open('Error al eliminar producto', 'Cerrar',
-          {duration: 3000}
-        );
+        this.snackbar.open('Error al eliminar producto', 'Cerrar', { duration: 3000 });
       }
     })
   }
 
-customFilterPredicate(): (data: Producto, filter: string) => boolean {
-  const filterFunction = (data: Producto, filter: string): boolean => {
-    return data.nombre.toLowerCase().includes(filter.toLowerCase());
-  };
-  return filterFunction;
-}
-
-
-  ngOnInit(): void {
-    this.getProductos();
-    console.log(this.productos);
+  customFilterPredicate(): (data: Producto, filter: string) => boolean {
+    return (data: Producto, filter: string): boolean => {
+      return data.nombre.toLowerCase().includes(filter.toLowerCase());
+    };
   }
 
   applyFilter() {
@@ -97,7 +95,7 @@ customFilterPredicate(): (data: Producto, filter: string) => boolean {
     }
     this.dataSource.filter = this.filtroNombre.trim().toLowerCase();
     if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage(); // Volver a la primera página al aplicar un filtro
+      this.dataSource.paginator.firstPage();
     }
   }
 

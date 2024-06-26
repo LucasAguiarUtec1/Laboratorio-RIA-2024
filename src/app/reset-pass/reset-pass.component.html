@@ -1,0 +1,28 @@
+<!-- reset-password.component.html -->
+<div class="container">
+  <mat-card class="form-card">
+    <mat-card-title>Restablecer contraseña</mat-card-title>
+    <form [formGroup]="resetPasswordForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Nueva contraseña</mat-label>
+        <input matInput type="password" formControlName="newPassword">
+        <mat-error
+          *ngIf="resetPasswordForm.get('newPassword')?.invalid && (resetPasswordForm.get('newPassword')?.dirty || resetPasswordForm.get('newPassword')?.touched)">
+          La contraseña debe tener al menos 6 caracteres.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Confirmar contraseña</mat-label>
+        <input matInput type="password" formControlName="confirmPassword">
+        <mat-error
+          *ngIf="resetPasswordForm.get('confirmPassword')?.invalid && (resetPasswordForm.get('confirmPassword')?.dirty || resetPasswordForm.get('confirmPassword')?.touched)">
+          Las contraseñas no coinciden.
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="!resetPasswordForm.valid">Restablecer
+        contraseña</button>
+    </form>
+  </mat-card>
+</div>

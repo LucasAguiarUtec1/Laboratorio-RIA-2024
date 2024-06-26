@@ -42,6 +42,7 @@ import { ProductosDialogComponent } from './productos-dialog/productos-dialog.co
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { RangoFechaDialogComponent } from './rango-fecha-dialog/rango-fecha-dialog.component';
+import { ResetPassComponent } from './reset-pass/reset-pass.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { RangoFechaDialogComponent } from './rango-fecha-dialog/rango-fecha-dial
     ProductoPipe,
     InsumosPipe,
     ProductosDialogComponent,
-    RangoFechaDialogComponent
+    RangoFechaDialogComponent,
+    ResetPassComponent
   ],
   imports: [
     BrowserModule,

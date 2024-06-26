@@ -47,6 +47,7 @@ export class NuevoProductoComponent implements OnInit {
       const nuevoProducto = this.productosForm.value;
       this.productosService.createProducto(nuevoProducto).subscribe({
         next: (next) => {
+          console.log(next);
           this.snackbar.open('Productos Creado!', 'Cerrar',
             {duration: 3000}
           );

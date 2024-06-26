@@ -1,33 +1,50 @@
-<input type="text" placeholder="Filtrar por nombre" [(ngModel)]="filtroNombre" (keyup)="applyFilter()">
-<div class="table-responsive">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<div class="container">
+  <mat-card class="form-card">
+    <mat-card-title class="titulo">INSUMOS</mat-card-title>
+
+    <div *ngIf="authService.role === 'PANADERO' || authService.role === 'ADMIN'" class="search-bar">
+      <mat-form-field>
+        <mat-label>Buscar por nombre</mat-label>
+        <input matInput placeholder="Filtrar por nombre" [(ngModel)]="filtroNombre" (keyup)="applyFilter()">
+      </mat-form-field>
+    </div>
     
+    <div class="table-container" *ngIf="dataSource.data.length > 0; else noInsumos">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 centrado-tabla">
+
         <ng-container matColumnDef="nombre">
-            <th  mat-header-cell *matHeaderCellDef>Nombre</th>
-            <td  mat-cell *matCellDef="let insumo">{{insumo.nombre}}</td>
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let insumo">{{insumo.nombre}}</td>
         </ng-container>
 
         <ng-container matColumnDef="unidad">
-            <th mat-header-cell *matHeaderCellDef>Unidad</th>
-            <td mat-cell *matCellDef="let insumo">{{insumo.unidad}}</td>
+          <th mat-header-cell *matHeaderCellDef>Unidad</th>
+          <td mat-cell *matCellDef="let insumo">{{insumo.unidad}}</td>
         </ng-container>
 
         <ng-container matColumnDef="acciones">
-            <th mat-header-cell *matHeaderCellDef>Acciones</th>
-            <td mat-cell *matCellDef="let insumo" class="action-cell">
-              <ng-container class="buttonContainer">
-                <button mat-icon-button color="primary" aria-label="Editar Producto" (click)="openEditModal(insumo)">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="warn" aria-label="Eliminar producto" (click)="deleteInsumo(insumo.id)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </ng-container>
-            </td>
-          </ng-container>
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let insumo" class="action-cell">
+            <ng-container class="buttonContainer">
+              <button mat-icon-button color="primary" aria-label="Editar Producto" (click)="openEditModal(insumo)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" aria-label="Eliminar producto" (click)="deleteInsumo(insumo.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </ng-container>
+          </td>
+        </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <ng-template #noInsumos>
+      <p class="no-productos">No hay insumos disponibles.</p>
+    </ng-template>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-card>
 </div>
-<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

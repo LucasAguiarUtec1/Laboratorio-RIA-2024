@@ -29,6 +29,12 @@ export class LabBackendService {
     return this.http.post<Usuario>(url, body);
   }
 
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    const url = `${this.apiUrl}/usuarios/reset-password`;
+    const body = { token, newPassword };
+    return this.http.post<any>(url, body);
+  }
+
   obtenerPanderos(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(`${this.apiUrl}/usuarios/obtener-panaderos`);
   }

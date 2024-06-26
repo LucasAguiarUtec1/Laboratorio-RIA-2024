@@ -1,36 +1,52 @@
-<input type="text" placeholder="Filtrar por nombre" [(ngModel)]="filtroNombre" (keyup)="applyFilter()">
-<button mat-raised-button color="primary" (click)="addInsumo()">Añadir Insumo</button>
-<div class="table-responsive">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let res"> {{res.id}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="insumo">
-      <th mat-header-cell *matHeaderCellDef> Insumo </th>
-      <td mat-cell *matCellDef="let res"> {{res.nombre}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="cantidad">
-      <th mat-header-cell *matHeaderCellDef> Cantidad </th>
-      <td mat-cell *matCellDef="let res"> {{res.cantidad}} {{res.unidad}}</td>
-    </ng-container>
-  
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Acciones</th>
-      <td mat-cell *matCellDef="let res" class="action-cell">
-        <ng-container class="buttonContainer">
-          <button mat-icon-button color="warn" aria-label="Eliminar producto" (click)="deleteInsumo(res.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </ng-container>
-      </td>
-    </ng-container>
+<div class="container">
+  <mat-card class="form-card">
+    <mat-card-title class="titulo">INSUMOS NECESARIOS PARA: {{productoNombre}}</mat-card-title>
+    <div *ngIf="authService.role === 'PANADERO' || authService.role === 'ADMIN'" class="search-bar">
+      <mat-form-field>
+        <mat-label>Buscar por nombre</mat-label>
+        <input matInput type="text" placeholder="Filtrar por nombre" [(ngModel)]="filtroNombre" (keyup)="applyFilter()">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="addInsumo()">Añadir Insumo</button>
+    </div>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+    <div class="table-container" *ngIf="dataSource.data.length > 0; else noInsProd">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 centrado-tabla">
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let res"> {{res.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="insumo">
+          <th mat-header-cell *matHeaderCellDef> Insumo </th>
+          <td mat-cell *matCellDef="let res"> {{res.nombre}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidad">
+          <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+          <td mat-cell *matCellDef="let res"> {{res.cantidad}} {{res.unidad}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let res" class="action-cell">
+            <ng-container class="buttonContainer">
+              <button mat-icon-button color="warn" aria-label="Eliminar producto" (click)="deleteInsumo(res.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <ng-template #noInsProd>
+      <p class="no-insumos">El producto no tiene insumos</p>
+    </ng-template>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-card>
 </div>
-<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

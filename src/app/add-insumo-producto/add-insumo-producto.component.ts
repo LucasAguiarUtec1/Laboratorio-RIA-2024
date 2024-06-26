@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Insumo } from '../models/insumo';
 import { Producto } from '../models/producto';
-import { InsumosService } from '../Services/insumos.service'
+import { InsumosService } from '../Services/insumos.service';
 import { ProductosServicesService } from '../Services/productos-services.service';
 
 @Component({
@@ -20,10 +20,10 @@ export class AddInsumoProductoComponent implements OnInit {
   cantidad: number = 0;
 
   constructor(private productosService: ProductosServicesService,
-    private insumosService: InsumosService,
-    private snackbar: MatSnackBar,
-    private route: ActivatedRoute,
-    private router: Router) { }
+              private insumosService: InsumosService,
+              private snackbar: MatSnackBar,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -35,7 +35,7 @@ export class AddInsumoProductoComponent implements OnInit {
   cargarDatosProducto(): void {
     this.productosService.getProductoById(this.productoId).subscribe({
       next: (data: Producto) => {
-        this.insumoProducto = data.insumos;
+        this.insumoProducto = data.insumos || [];
         this.cargarInsumos();
       },
       error: (error) => {
@@ -60,7 +60,6 @@ export class AddInsumoProductoComponent implements OnInit {
     });
   }
 
-
   agregarInsumo() {
     if (!this.selectedInsumo || this.cantidad <= 0) {
       this.snackbar.open('Selecciona un insumo y especifica la cantidad', 'Cerrar', { duration: 3000 });
@@ -75,7 +74,7 @@ export class AddInsumoProductoComponent implements OnInit {
     this.productosService.addInsumoToProduct(this.productoId, nuevoInsumo.insumoId, nuevoInsumo.cantidad).subscribe({
       next: (data) => {
         this.snackbar.open('Insumo agregado correctamente', 'Cerrar', { duration: 3000 });
-        this.router.navigate(['/insumoProducto', this.productoId]); // Redirige a/ la página del producto después de agregar
+        this.router.navigate(['/insumoProducto', this.productoId]);
       },
       error: (error) => {
         console.log(error);
