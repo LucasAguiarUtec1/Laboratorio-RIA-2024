@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { InsumosService } from '../Services/insumos.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nuevo-insumo',
@@ -14,7 +15,8 @@ export class NuevoInsumoComponent implements OnInit {
 
   constructor (private fb: FormBuilder,
     private insumosService: InsumosService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private router: Router
   )
   {
     this.insumosForm = this.fb.group({
@@ -32,6 +34,7 @@ export class NuevoInsumoComponent implements OnInit {
             {duration: 3000}
           )
           this.insumosForm.reset();
+          this.router.navigate(['/insumos']);
         },
         error: (error) => {
           console.log(error);

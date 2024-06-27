@@ -53,6 +53,7 @@ export class AppComponent implements OnInit {
 
   cerrarSesion() {
     this.authService.logout();
+    this.carritoService.vaciarCarrito();
     this.router.navigate(['/iniciarSesion']);
   }
 

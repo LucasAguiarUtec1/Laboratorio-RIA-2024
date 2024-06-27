@@ -1,12 +1,41 @@
+<style>
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Ajusta el margen superior según necesites */
+  }
+
+  .no-insumos {
+        margin-top: 10px;
+        font-size: 1rem;
+        font-weight: 500; 
+        text-align: center;
+    }
+</style>
+
+<style>
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Ajusta el margen superior según necesites */
+  }
+
+  .no-insumos {
+        margin-top: 10px;
+        font-size: 1rem;
+        font-weight: 500; 
+        text-align: center;
+    }
+</style>
+
 <div class="container">
   <mat-card class="form-card">
     <mat-card-title class="titulo">INSUMOS NECESARIOS PARA: {{productoNombre}}</mat-card-title>
-    <div *ngIf="authService.role === 'PANADERO' || authService.role === 'ADMIN'" class="search-bar">
+    <div *ngIf="authService.role === 'PANADERO' || authService.role === 'ADMIN' && dataSource.data.length > 0" class="search-bar">
       <mat-form-field>
         <mat-label>Buscar por nombre</mat-label>
         <input matInput type="text" placeholder="Filtrar por nombre" [(ngModel)]="filtroNombre" (keyup)="applyFilter()">
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="addInsumo()">Añadir Insumo</button>
     </div>
 
     <div class="table-container" *ngIf="dataSource.data.length > 0; else noInsProd">
@@ -41,12 +70,18 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-    </div>
 
+    </div>
+    
     <ng-template #noInsProd>
       <p class="no-insumos">El producto no tiene insumos</p>
     </ng-template>
-
+    
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="addInsumo()" style="width: 200px;">Añadir Insumo</button>
+    </div>
   </mat-card>
 </div>
+

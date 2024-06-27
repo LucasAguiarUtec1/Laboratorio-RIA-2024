@@ -219,10 +219,10 @@
       <p mat-menu-item *ngIf="authService.isLoggedIn && isSmallScreen" disabled>{{authService.nombre}}</p>
       <!-- <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" [matMenuTriggerFor]="productosMenu">Productos</button> -->
       <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN'" (click)="registrarUsuario()"><mat-icon>person_add</mat-icon>Registrar usuario</button>
-      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="nuevoProducto()"><mat-icon>add</mat-icon>Nuevo Producto</button>
+      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN'" (click)="nuevoProducto()"><mat-icon>add</mat-icon>Nuevo Producto</button>
       <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="productos()"><mat-icon>create</mat-icon>Ver Productos</button>
+      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN'" (click)="nuevoInsumo()"><mat-icon>add</mat-icon>Nuevo Insumo</button>
       <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="insumos()"><mat-icon>create</mat-icon>Insumos</button>
-      <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'ADMIN' || authService.role === 'PANADERO'" (click)="nuevoInsumo()"><mat-icon>add</mat-icon>Nuevo Insumo</button>
       <button mat-menu-item *ngIf="authService.isLoggedIn && authService.role === 'USER'" (click)="carrito()"><mat-icon>shopping_cart</mat-icon>Ver Carrito</button>
       <button mat-menu-item *ngIf="authService.isLoggedIn" (click)="pedidos()"><mat-icon>checklist</mat-icon>Pedidos</button>
       <button mat-menu-item *ngIf="!authService.isLoggedIn" (click)="iniciarSesion()"><mat-icon>login</mat-icon>Iniciar sesión</button>

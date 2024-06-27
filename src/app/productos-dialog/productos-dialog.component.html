@@ -17,18 +17,29 @@
     align-items: center;
     position: relative;
   }
-
-  li::before {
-    content: '•';
-    margin-right: 0.5em;
-  }
 </style>
 <h1 mat-dialog-title>Productos</h1>
 <div mat-dialog-content>
-  <ul>
-    <li *ngFor="let producto of data.productos">{{ producto.cantidad }} x {{ producto.nombre }} - Importe: ${{ producto.cantidad * producto.precio}}</li>
+  <ul> <!-- Asegura que no haya padding ni margin -->
+    <li *ngFor="let producto of data.productos">
+      <div style="margin-bottom: 5px;">
+        <div>
+          {{ producto.cantidad }} x {{ producto.nombre }} - Importe: ${{ producto.cantidad * producto.precio }}
+        </div>
+        <div *ngIf="authService.role === 'PANADERO' || authService.role === 'ADMIN'" style="display: flex;">
+          Insumos:
+          <ul> <!-- Asegura que no haya padding ni margin -->
+            <li *ngFor="let insumo of producto.insumos">
+              - {{ getInsumoNombre(insumo.id) }} {{ insumo.cantidad }}{{ getInsumoUnidad(insumo.id) }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
   </ul>
 </div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Cerrar</button>
 </div>
+
+

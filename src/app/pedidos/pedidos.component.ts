@@ -9,6 +9,7 @@ import { RangoFechaDialogComponent } from '../rango-fecha-dialog/rango-fecha-dia
 import { MatPaginator } from '@angular/material/paginator';
 import { LabBackendService } from '../Services/lab-backend.service';
 import { Usuario } from '../models/usuario';
+import { EntregadoDialogComponent } from '../entregado-dialog/entregado-dialog.component'; // Ruta al componente del popup
 
 
 
@@ -63,6 +64,7 @@ export class PedidosComponent implements OnInit {
       this.displayedColumns.unshift('usuario');
       this.pedidosService.obtenerTodosLosPedidos().subscribe(pedidos => {
         this.pedidos.data = pedidos;
+        console.log(pedidos);
         this.pedidosFiltrados = [...pedidos]; 
         this.pedidosOriginales = [...pedidos];
         this.pedidos.paginator = this.paginator;
@@ -100,6 +102,7 @@ export class PedidosComponent implements OnInit {
   }
 
   openDialog(productos: any[]): void {
+    console.log(productos);
     this.dialog.open(ProductosDialogComponent, {
       data: { productos },
     });
@@ -355,8 +358,25 @@ export class PedidosComponent implements OnInit {
   }
 
   public cambiarEstado(pedido: Pedido, estado: string): void {
-    pedido.estado = estado;
-    this.pedidosService.cambiarEstadoPedido(pedido, estado).subscribe();
+    const estadoAnterior = pedido.estado;
+    if (estado === 'entregado') {
+      console.log('entregado');
+      const dialogRef = this.dialog.open(EntregadoDialogComponent, {
+        width: '300px',
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          pedido.estado = estado;
+          this.pedidosService.cambiarEstadoPedido(pedido, estado).subscribe();
+          console.log(pedido);
+        } else {
+          pedido.estado = estadoAnterior;  
+        }
+      });
+    } else {
+      pedido.estado = estado;
+      this.pedidosService.cambiarEstadoPedido(pedido, estado).subscribe();
+    }
   }
 
   public asignarPanaderoAdmin(pedido: Pedido, panadero: string): void {

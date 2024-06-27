@@ -1,21 +1,120 @@
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 10px auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .form-card {
+    width: 80%;
+    max-width: 1200px;
+    box-sizing: border-box;
+  }
+
+  .cantidad-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .cantidad-field {
+    flex: 1;
+  }
+
+  .unidad {
+    margin-left: 10px;
+  }
+
+  .add-icon {
+    cursor: pointer;
+  }
+
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align {
+    margin-bottom: -1.5rem !important; 
+    padding-bottom: 0 !important; 
+  }
+
+  .cantidad2 {
+    display: flex;
+    align-items: center; 
+  }
+
+  .cantidad3 {
+    width: 50%;
+    font-size: 0.8rem; 
+    border: 1px solid #ccc;
+    border-radius: 5px;  
+  }
+
+  .centrado-tabla th, .centrado-tabla td {
+        text-align: center; 
+    }
+
+    .centrado-tabla th mat-header-cell, .centrado-tabla td mat-cell {
+        flex: 1; 
+    }
+
+    .table-container {
+        overflow-x: auto; 
+    }
+</style>
+
 <div class="container">
-  <h3>Agregar Insumos al Producto</h3>
+  <mat-card class="form-card">
+    <mat-card-title style="text-align: center; margin-bottom: 10px;">Agregar insumos a producto</mat-card-title>
+    <div class="search-bar">
+      <mat-form-field>
+        <mat-label>Buscar insumo</mat-label>
+        <input matInput (keyup)="applyUserFilter($event)" placeholder="Ingrese el email del usuario">
+      </mat-form-field>
+    </div>
+    <div class="table-container">
+    <table mat-table [dataSource]="resultado" class="mat-elevation-z8 centrado-tabla">
+      <!-- Nombre Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let insumo"> {{insumo.nombre}} </td>
+      </ng-container>
 
-  <mat-form-field>
-    <mat-label>Seleccionar Insumo</mat-label>
-    <mat-select [(ngModel)]="selectedInsumo">
-      <mat-option *ngFor="let insumo of resultado" [value]="insumo">
-        {{ insumo.nombre }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+      <!-- Unidad Column -->
+      <ng-container matColumnDef="unidad">
+        <th mat-header-cell *matHeaderCellDef> Unidad </th>
+        <td mat-cell *matCellDef="let insumo"> {{insumo.unidad}} </td>
+      </ng-container>
 
-  <div class="cantidad-container">
-    <mat-form-field class="cantidad-field">
-      <input matInput type="number" placeholder="Cantidad" [(ngModel)]="cantidad">
-    </mat-form-field>
-    <span class="unidad" *ngIf="selectedInsumo">{{ selectedInsumo.unidad }}</span>
-  </div>
+      <ng-container matColumnDef="cantidad" class="cantidad2">
+        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+        <td mat-cell *matCellDef="let insumo">
+          <mat-form-field class="cantidad3">
+            <input matInput type="number" placeholder="Cantidad" [(ngModel)]="insumo.cantidad" min="0">
+          </mat-form-field>
+        </td>
+      </ng-container>
 
-  <button mat-raised-button color="primary" (click)="agregarInsumo()">Agregar Insumo</button>
+      <!-- Agregar Column -->
+      <ng-container matColumnDef="agregar">
+        <th mat-header-cell *matHeaderCellDef> Agregar </th>
+        <td mat-cell *matCellDef="let insumo">
+          <mat-icon class="add-icon" (click)="agregarInsumo(insumo)">add</mat-icon>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    </div>
+    
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    <div class="cantidad-container" *ngIf="selectedInsumo">
+      <mat-form-field class="cantidad-field">
+        <input matInput type="number" placeholder="Cantidad" [(ngModel)]="cantidad">
+      </mat-form-field>
+      <span class="unidad">{{ selectedInsumo.unidad }}</span>
+    </div>
+  </mat-card>
 </div>

@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Producto } from '../models/producto';
 import { ProductosServicesService } from '../Services/productos-services.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nuevo-producto',
@@ -13,12 +14,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class NuevoProductoComponent implements OnInit {
 
   productosForm: FormGroup;
-
+  submitted = false;
   imageString: string | ArrayBuffer | null = '';
 
   constructor(private fb: FormBuilder, 
     private productosService: ProductosServicesService, 
-    private snackbar: MatSnackBar){
+    private snackbar: MatSnackBar,
+    private router: Router){
     this.productosForm = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: [''],
@@ -43,6 +45,7 @@ export class NuevoProductoComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.submitted = true;
     if (this.productosForm.valid) {
       const nuevoProducto = this.productosForm.value;
       this.productosService.createProducto(nuevoProducto).subscribe({
@@ -52,6 +55,7 @@ export class NuevoProductoComponent implements OnInit {
             {duration: 3000}
           );
           this.productosForm.reset();
+          this.router.navigate(['/productos']);
         },
         error: (error) => {
             console.log(error);

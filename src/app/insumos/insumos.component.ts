@@ -85,7 +85,6 @@ export class InsumosComponent implements OnInit, AfterViewInit {
 
   openEditModal(insumo: any): void {
     const modal = this.modal.open(EditarInsumoComponent, {
-      width: '300px',
       data: insumo,
     });  
 

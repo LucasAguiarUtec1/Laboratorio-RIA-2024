@@ -1,14 +1,48 @@
-<h1 mat-dialog-title>Editar Producto</h1>
+<style>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+  }
+
+  .form-card {
+    height: 100%;
+  }
+
+  .nombre {
+    margin-bottom: 20px;
+  }
+
+  .descripcion {
+    margin-bottom: 20px;
+  }
+
+  .precio {
+    margin-bottom: 20px;
+  }
+
+  .file-input-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .preview-wrapper {
+    margin-bottom: 20px;
+    width: 75px;
+    height: 75px;
+  }
+</style>
 <div class="container">
   <mat-card class="form-card">
+    <mat-card-title class="text-center" style="text-align: center; margin-bottom: 10px;">Editar Producto</mat-card-title>
     <form [formGroup]="editProducto" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" class="nombre">
         <mat-label>Nombre</mat-label>
         <input matInput formControlName="nombre" required>
         <mat-error *ngIf="editProducto.get('nombre')?.hasError('required')">El nombre es requerido</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" class="descripcion">
         <mat-label>Descripción</mat-label>
         <input matInput formControlName="descripcion">
       </mat-form-field>
@@ -22,7 +56,7 @@
         <img [src]="imageString" alt="Imagen cargada" />
       </div>
 
-      <mat-form-field appearance="fill" class="margin-top">
+      <mat-form-field appearance="fill" class="precio">
         <mat-label>Precio</mat-label>
         <input matInput type="number" formControlName="precio" required>
         <mat-error *ngIf="editProducto.get('precio')?.hasError('required')">El precio es requerido</mat-error>

@@ -56,8 +56,6 @@ export class ProductosComponent implements OnInit, AfterViewInit {
 
   openEditModal(producto: Producto): void {
     const modal = this.modal.open(EditarProductoComponent, {
-      width: '500px',
-      height: '600px',
       data: producto
     });
 

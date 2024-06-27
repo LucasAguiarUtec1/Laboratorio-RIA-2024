@@ -1,5 +1,6 @@
 <div class="container">
   <mat-card class="form-card">
+    <mat-card-title class="text-center" style="text-align: center; margin-bottom: 10px;">Nuevo producto</mat-card-title>
     <form [formGroup]="productosForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill">
         <mat-label>Nombre</mat-label>
@@ -15,7 +16,7 @@
       <div class="file-input-wrapper">
         <label for="file-input">Imagen</label>
         <input id="file-input" type="file" (change)="onFileSelected($event)">
-        <mat-error *ngIf="productosForm.get('imagen')?.hasError('required')">El nombre es requerido</mat-error>
+        <mat-error *ngIf="submitted && productosForm.get('imagen')?.hasError('required')">La imagen es requerida</mat-error>
       </div>
 
       <div class="preview-wrapper" *ngIf="imageString">

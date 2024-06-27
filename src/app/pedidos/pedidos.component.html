@@ -111,16 +111,38 @@
         align-items: center;
         padding: 0 20px;
     }
+
+    .select-container-user {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 250px;
+        white-space: nowrap;
+    }
+
+    @media (max-width: 600px) {
+        .select-container-user {
+            padding-left: 25px; /* Ajusta este valor según necesites */
+        }
+    }
+
+    .select-container-flecha-user {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 </style>
 
 <div class="container">
     <mat-card class="form-card">
       <mat-card-title class="titulo">PEDIDOS</mat-card-title>
-      <div *ngIf="pedidos.data.length === 0 && !filtroRangoActivo && !filtroEstadoActivo && !filtroUsuarioActivo && !filtroPanaeroActivo; else mostrarTabla" class="no-productos">
+      <div *ngIf="pedidos.data.length === 0 && !filtroRangoActivo && !filtroEstadoActivo && !filtroUsuarioActivo && !filtroPanaeroActivo && filtroEstadoActivo2 && filtroPanaeroActivo2; else mostrarTabla" class="no-productos">
         <p>No tienes pedidos realizados</p>
       </div>
       <ng-template #mostrarTabla>
-        <div *ngIf="pedidos.data.length === 0 && (filtroRangoActivo || filtroEstadoActivo || filtroPanaeroActivo || filtroUsuarioActivo)" class="no-productos">
+        <div *ngIf="pedidos.data.length === 0 && (filtroRangoActivo || filtroEstadoActivo || filtroPanaeroActivo || filtroUsuarioActivo || filtroEstadoActivo2 || filtroPanaeroActivo2)" class="no-productos">
           <p>No hay pedidos que cumplan con el filtro seleccionado</p>
         </div>
         <div *ngIf="authService.role === 'PANADERO' || authService.role === 'ADMIN'" class="search-bar">
@@ -193,8 +215,8 @@
           <ng-container matColumnDef="fecha">
             <th mat-header-cell *matHeaderCellDef>
               <div style="display: flex; align-items: center; justify-content: center; width: 200px;">
-                <span>Fecha límite de entrega</span>
-                <mat-icon [matMenuTriggerFor]="menu" class="flechita">arrow_drop_down</mat-icon>
+                <span [ngClass]="{'select-container-user': authService.role === 'USER'}">Fecha límite de entrega</span>
+                <mat-icon [matMenuTriggerFor]="menu" class="flechita" [ngClass]="{'select-container-flecha-user': authService.role === 'USER'}">arrow_drop_down</mat-icon>
                 <mat-menu #menu="matMenu">
                   <button mat-menu-item (click)="ordenar('ascendente')">Ascendente</button>
                   <button mat-menu-item (click)="ordenar('descendente')">Descendente</button>
@@ -226,13 +248,16 @@
               <ng-container *ngIf="authService.role === 'PANADERO' || authService.role === 'ADMIN'; else soloVerEstado">
                 <!-- Verifica si el usuario actual es el panadero asignado -->
                 <mat-form-field appearance="fill" [ngClass]="{'small-select': authService.role === 'PANADERO' || authService.role === 'ADMIN'}">
-                  <mat-select [(value)]="pedido.estado" (selectionChange)="cambiarEstado(pedido, $event.value)" [disabled]="pedido.panadero !== authService.nombre">
+                  <mat-select [value]="pedido.estado" 
+                              (selectionChange)="cambiarEstado(pedido, $event.value)" 
+                              [disabled]="pedido.panadero === 'sinAsignar' || !(authService.role === 'ADMIN' || pedido.panadero === authService.nombre) || pedido.estado == 'entregado'">
                     <mat-option value="pendiente">Pendiente</mat-option>
                     <mat-option value="en preparación">En preparación</mat-option>
                     <mat-option value="listo para entregar">Listo para entregar</mat-option>
                     <mat-option value="entregado">Entregado</mat-option>
                   </mat-select>
                 </mat-form-field>
+                
               </ng-container>
               <ng-template #soloVerEstado>
                 {{ pedido.estado }}

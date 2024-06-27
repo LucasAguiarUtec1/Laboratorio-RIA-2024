@@ -1,18 +1,20 @@
 <div class="container">
-    <mat-card class="form-card">
+  <mat-card class="form-card">
+      <!-- Título centrado -->
+      <mat-card-title class="text-center" style="text-align: center; margin-bottom: 10px;">Nuevo insumo</mat-card-title>
       <form [formGroup]="insumosForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill">
-          <mat-label>Nombre</mat-label>
-          <input matInput formControlName="nombre" required>
-          <mat-error *ngIf="insumosForm.get('nombre')?.hasError('required')">El nombre es requerido</mat-error>
-        </mat-form-field>
-  
-        <mat-form-field appearance="fill">
-          <mat-label>Unidad</mat-label>
-          <input matInput formControlName="unidad">
-        </mat-form-field>
-  
-        <button mat-raised-button color="primary" type="submit">Crear Producto</button>
+          <mat-form-field appearance="fill">
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="nombre" required>
+              <mat-error *ngIf="insumosForm.get('nombre')?.hasError('required')">El nombre es requerido</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+              <mat-label>Unidad</mat-label>
+              <input matInput formControlName="unidad">
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" type="submit">Crear Producto</button>
       </form>
-    </mat-card>
-  </div>
+  </mat-card>
+</div>
