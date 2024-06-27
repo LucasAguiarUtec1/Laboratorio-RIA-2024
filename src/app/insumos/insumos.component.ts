@@ -17,7 +17,7 @@ export class InsumosComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['nombre', 'unidad', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'unidad'];
 
   constructor(
     private insumosService: InsumosService, 
@@ -32,6 +32,9 @@ export class InsumosComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getInsumos();
+    if (this.authService.role === 'ADMIN') {
+      this.displayedColumns.push('acciones');
+    }
   }
 
   ngAfterViewInit(): void {

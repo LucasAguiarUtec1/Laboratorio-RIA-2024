@@ -102,7 +102,6 @@ export class PedidosComponent implements OnInit {
   }
 
   openDialog(productos: any[]): void {
-    console.log(productos);
     this.dialog.open(ProductosDialogComponent, {
       data: { productos },
     });

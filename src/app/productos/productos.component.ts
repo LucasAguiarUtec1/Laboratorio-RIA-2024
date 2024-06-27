@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../Services/auth-service.service';
+import { InsumosDialogComponent } from '../insumos-dialog/insumos-dialog.component';
 
 @Component({
   selector: 'app-productos',
@@ -23,16 +24,22 @@ export class ProductosComponent implements OnInit, AfterViewInit {
     private snackbar: MatSnackBar,
     public modal: MatDialog,
     private router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    private dialog: MatDialog
   ){}
 
   productos: Producto[] = [];
   dataSource: MatTableDataSource<Producto> = new MatTableDataSource<Producto>([]);
   filtroNombre: string = ''; 
-  displayedColumns: string[] = ['id', 'nombre', 'descripcion', 'imagen', 'precio', 'actions'];
+  displayedColumns: string[] = ['nombre', 'descripcion', 'imagen', 'precio'];
 
   ngOnInit(): void {
     this.getProductos();
+    if (this.authService.role === 'PANADERO') {
+      this.displayedColumns.push('insumos');
+    } else if (this.authService.role === 'ADMIN') {
+      this.displayedColumns.push('actions');
+    }
   }
 
   ngAfterViewInit(): void {
@@ -53,6 +60,13 @@ export class ProductosComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  openDialogInsumos(producto: Producto): void {
+    this.dialog.open(InsumosDialogComponent, {
+      data: { insumos: producto.insumos },
+    });
+  }
+
 
   openEditModal(producto: Producto): void {
     const modal = this.modal.open(EditarProductoComponent, {
