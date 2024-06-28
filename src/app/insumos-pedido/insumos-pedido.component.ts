@@ -36,7 +36,7 @@ export class InsumosPedidoComponent implements OnInit {
       next: (data: Insumo[]) => {
         this.insumos = data;
         this.insumosPedido.forEach(insumoPedido => {
-          const insumoInfo = this.insumos.find(insumo => insumo.id === insumoPedido.id);
+          const insumoInfo = this.insumos.find(insumo => insumo.id == insumoPedido.id);
           if (insumoInfo) {
             insumoPedido.nombre = insumoInfo.nombre;
             insumoPedido.unidad = insumoInfo.unidad;
@@ -55,7 +55,7 @@ export class InsumosPedidoComponent implements OnInit {
     this.pedidos.forEach(pedido => {
       pedido.productos.forEach(producto => {
         producto.insumos.forEach((insumo: any) => {
-          const insumoExistente = this.insumosPedido.find(i => i.id === insumo.id);
+          const insumoExistente = this.insumosPedido.find(i => i.id == insumo.id);
           if (insumoExistente) {
             insumoExistente.cantidad += insumo.cantidad;
           } else {

@@ -27,7 +27,6 @@ export class ProductosDialogComponent implements OnInit {
     this.insumosService.getInsumos().subscribe({
       next: (data: Insumo[]) => {
         this.insumos = data;
-        console.log(this.insumos);
       },
       error: (error) => {
         console.log(error);
@@ -37,12 +36,12 @@ export class ProductosDialogComponent implements OnInit {
   }
 
   getInsumoNombre(id: number): string {
-    const insumo = this.insumos.find(i => i.id === id);
+    const insumo = this.insumos.find(i => i.id == id);
     return insumo ? insumo.nombre : '';
   }
 
   getInsumoUnidad(id: number): string {
-    const insumo = this.insumos.find(i => i.id === id);
+    const insumo = this.insumos.find(i => i.id == id);
     return insumo ? insumo.unidad : '';
   }
 }
