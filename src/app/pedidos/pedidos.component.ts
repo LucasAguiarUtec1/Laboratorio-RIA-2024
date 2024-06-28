@@ -10,7 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { LabBackendService } from '../Services/lab-backend.service';
 import { Usuario } from '../models/usuario';
 import { EntregadoDialogComponent } from '../entregado-dialog/entregado-dialog.component'; // Ruta al componente del popup
-
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -43,7 +43,8 @@ export class PedidosComponent implements OnInit {
     private pedidosService: PedidosServiceService,
     public authService: AuthService,
     public dialog: MatDialog,
-    private labBackendService: LabBackendService
+    private labBackendService: LabBackendService,
+    private router: Router,
   ) {
     this.pedidos = new MatTableDataSource<Pedido>([]);
   }
@@ -383,6 +384,10 @@ export class PedidosComponent implements OnInit {
     console.log(panadero);
     pedido.panadero = panadero;
     this.pedidosService.tomarPedido(pedido, panadero).subscribe();
+  }
+
+  public tablInsumosNecesarios(pedido: Pedido[]): void {
+    this.router.navigate(['/insumosPedido'], { queryParams: { pedidos: JSON.stringify(pedido) } });
   }
 }
 

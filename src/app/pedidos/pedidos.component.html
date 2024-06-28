@@ -133,6 +133,12 @@
         padding-left: 10px;
         padding-right: 10px;
     }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px; /* Ajusta el margen superior según necesites */
+    }
 </style>
 
 <div class="container">
@@ -271,6 +277,10 @@
       </div>
       </ng-template>
       <mat-paginator [pageSize]="5" [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+
+      <div class="button-container">
+        <button mat-raised-button color="primary" (click)="tablInsumosNecesarios(pedidos.data)" style="width: 200px;">Ver insumos necarios</button>
+      </div>
     </mat-card>
   </div>
 

@@ -12,6 +12,7 @@ import { InsumosProductoComponent } from './insumos-producto/insumos-producto.co
 import { NuevoInsumoComponent } from './nuevo-insumo/nuevo-insumo.component';
 import { AddInsumoProductoComponent } from './add-insumo-producto/add-insumo-producto.component';
 import { ResetPassComponent } from './reset-pass/reset-pass.component';
+import { InsumosPedidoComponent } from './insumos-pedido/insumos-pedido.component';
 
 
 const routes: Routes = [
@@ -27,7 +28,8 @@ const routes: Routes = [
   {path: 'nuevoInsumo', component: NuevoInsumoComponent},
   {path: 'insumoProducto/:id', component: InsumosProductoComponent},
   {path: 'addInsumoProducto/:id', component: AddInsumoProductoComponent},
-  {path: 'reset-password/:token', component: ResetPassComponent}
+  {path: 'reset-password/:token', component: ResetPassComponent},
+  {path: 'insumosPedido', component: InsumosPedidoComponent},
 ];
 
 @NgModule({

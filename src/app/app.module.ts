@@ -45,6 +45,7 @@ import { RangoFechaDialogComponent } from './rango-fecha-dialog/rango-fecha-dial
 import { ResetPassComponent } from './reset-pass/reset-pass.component';
 import { EntregadoDialogComponent } from './entregado-dialog/entregado-dialog.component';
 import { InsumosDialogComponent } from './insumos-dialog/insumos-dialog.component';
+import { InsumosPedidoComponent } from './insumos-pedido/insumos-pedido.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { InsumosDialogComponent } from './insumos-dialog/insumos-dialog.componen
     RangoFechaDialogComponent,
     ResetPassComponent,
     EntregadoDialogComponent,
-    InsumosDialogComponent
+    InsumosDialogComponent,
+    InsumosPedidoComponent
   ],
   imports: [
     BrowserModule,
