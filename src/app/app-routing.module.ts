@@ -13,23 +13,24 @@ import { NuevoInsumoComponent } from './nuevo-insumo/nuevo-insumo.component';
 import { AddInsumoProductoComponent } from './add-insumo-producto/add-insumo-producto.component';
 import { ResetPassComponent } from './reset-pass/reset-pass.component';
 import { InsumosPedidoComponent } from './insumos-pedido/insumos-pedido.component';
+import { roleGuardGuard } from './role-guard.guard'; // Asegúrate de la ruta correcta
 
 
 const routes: Routes = [
-  {path: "nuevoProducto" , component: NuevoProductoComponent},
-  {path: 'productos', component: ProductosComponent},
-  {path: 'insumos', component: InsumosComponent},
+  {path: "nuevoProducto" , component: NuevoProductoComponent, canActivate: [roleGuardGuard] },
+  {path: 'productos', component: ProductosComponent, canActivate: [roleGuardGuard] },
+  {path: 'insumos', component: InsumosComponent, canActivate: [roleGuardGuard] },
   {path: 'registrarse', component: RegistrarseComponent},
   {path: 'iniciarSesion', component: IniciarSesionComponent},
   {path: '', redirectTo: '/iniciarSesion', pathMatch: 'full'}, 
-  {path: 'home', component: HomePageComponent},
-  {path: 'carrito', component: CarritoComponent},
-  {path: 'pedidos', component: PedidosComponent},
-  {path: 'nuevoInsumo', component: NuevoInsumoComponent},
-  {path: 'insumoProducto/:id', component: InsumosProductoComponent},
-  {path: 'addInsumoProducto/:id', component: AddInsumoProductoComponent},
+  {path: 'home', component: HomePageComponent, canActivate: [roleGuardGuard] },
+  {path: 'carrito', component: CarritoComponent, canActivate: [roleGuardGuard]},
+  {path: 'pedidos', component: PedidosComponent, canActivate: [roleGuardGuard]},
+  {path: 'nuevoInsumo', component: NuevoInsumoComponent, canActivate: [roleGuardGuard]},
+  {path: 'insumoProducto/:id', component: InsumosProductoComponent },
+  {path: 'addInsumoProducto/:id', component: AddInsumoProductoComponent, canActivate: [roleGuardGuard]},
   {path: 'reset-password/:token', component: ResetPassComponent},
-  {path: 'insumosPedido', component: InsumosPedidoComponent},
+  {path: 'insumosPedido', component: InsumosPedidoComponent, canActivate: [roleGuardGuard]},
 ];
 
 @NgModule({
