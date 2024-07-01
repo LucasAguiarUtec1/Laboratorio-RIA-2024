@@ -278,7 +278,7 @@
       </ng-template>
       <mat-paginator [pageSize]="5" [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
 
-      <div class="button-container">
+      <div *ngIf="authService.role === 'PANADERO' || authService.role === 'ADMIN'" class="button-container">
         <button mat-raised-button color="primary" (click)="tablInsumosNecesarios(pedidos.data)" style="width: 200px;">Ver insumos necarios</button>
       </div>
     </mat-card>
