@@ -61,7 +61,7 @@ export class InsumosPedidoComponent implements OnInit {
           } else {
             this.insumosPedido.push({
               id: insumo.id,
-              cantidad: insumo.cantidad 
+              cantidad: insumo.cantidad
             });
           }
         });
