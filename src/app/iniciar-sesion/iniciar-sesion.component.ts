@@ -43,7 +43,7 @@ export class IniciarSesionComponent implements OnInit {
         next: (data) => {
           console.log('Se inicio sesion exitosamente', data);
           this.authService.setToken(data.token!);
-          this.authService.setLoggedIn(true, data.role, data.nombre);
+          this.authService.setLoggedIn(true, data.role, data.nombre, data.telefono);
           if (data.role === 'USER') {
             this.router.navigate(['/home']);
           } else if (data.role === 'ADMIN' || data.role === 'PANADERO') {

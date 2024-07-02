@@ -1,0 +1,44 @@
+<div class="container">
+    <mat-card class="form-card">
+        <mat-card-title class="titulo">Mi Informacion</mat-card-title>
+        <div *ngIf="!edit" style="margin-bottom: 16px;">
+            <p class="card-text">Email: {{authService.nombre}}</p>
+        </div>
+        <div *ngIf="!edit" style="margin-bottom: 16px;">
+            <p>Telefono: {{authService.telefono}}</p>
+        </div>
+        <div *ngIf="edit" class="email-container">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div style="margin-bottom: 16px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" aria-label="Email">
+                        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+                            El email es requerido
+                        </mat-error>
+                        <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+                            Por favor ingresa un email válido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div style="margin-bottom: 16px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Telefono</mat-label>
+                        <input matInput formControlName="telefono" type="text" class="telefonoInput" aria-label="Telefono">
+                        <mat-error *ngIf="loginForm.get('telefono')?.hasError('required')">
+                            El telefono es requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <button color="primary" mat-raised-button class="editButton" aria-label="Save email" style="margin-bottom: 10px;">
+                    Guardar Cambios
+                </button>
+            </form>
+        </div>
+        <p class="role-text">Rol: {{authService.role}}</p>
+        <button *ngIf="!edit" color="primary" mat-raised-button class="editButton" aria-label="Edit email" (click)="editProfile()" style="margin-bottom: 10px;">
+            Editar Informacion
+        </button>
+        <button mat-raised-button class="editButton" color="primary">Ver Mis Pedidos</button>
+    </mat-card>
+</div>

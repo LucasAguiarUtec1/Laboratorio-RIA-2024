@@ -29,6 +29,12 @@ export class LabBackendService {
     return this.http.post<Usuario>(url, body);
   }
 
+  updateUser(email: string, newEmail: string, telefono: string): Observable<Usuario> {
+    const url = `${this.apiUrl}/usuarios/updateUser`; // Asume que la ruta de registro en tu servidor es '/register'
+    const body = { email, newEmail, telefono };
+    return this.http.put<Usuario>(url, body);
+  }
+
   resetPassword(token: string, newPassword: string): Observable<any> {
     const url = `${this.apiUrl}/usuarios/reset-password`;
     const body = { token, newPassword };

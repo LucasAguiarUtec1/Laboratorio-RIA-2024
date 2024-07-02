@@ -46,6 +46,7 @@ import { ResetPassComponent } from './reset-pass/reset-pass.component';
 import { EntregadoDialogComponent } from './entregado-dialog/entregado-dialog.component';
 import { InsumosDialogComponent } from './insumos-dialog/insumos-dialog.component';
 import { InsumosPedidoComponent } from './insumos-pedido/insumos-pedido.component';
+import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { InsumosPedidoComponent } from './insumos-pedido/insumos-pedido.componen
     ResetPassComponent,
     EntregadoDialogComponent,
     InsumosDialogComponent,
-    InsumosPedidoComponent
+    InsumosPedidoComponent,
+    MiPerfilComponent
   ],
   imports: [
     BrowserModule,

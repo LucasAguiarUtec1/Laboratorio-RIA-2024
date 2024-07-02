@@ -9,15 +9,17 @@ export class AuthService {
   isLoggedIn = false;
   role: string | null = null;
   nombre: string | null = null;
+  telefono: string | null = null;
 
   constructor() { }
 
-  setLoggedIn(value: boolean, role: string | null, email: string | null) {
+  setLoggedIn(value: boolean, role: string | null, email: string | null, telefono: string | null) {
     this.isLoggedIn = value;
     this.role = role;
     this.nombre = email;
+    this.telefono = telefono;
   }
-
+  
   setToken(token: string | null) {
     this.tokenSubject.next(token);
   }
@@ -29,6 +31,6 @@ export class AuthService {
 
   logout() {
     this.setToken(null);
-    this.setLoggedIn(false, null, null);
+    this.setLoggedIn(false, null, null, null);
   }
 }
